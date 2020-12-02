@@ -10,6 +10,7 @@ import AccountScreen from './src/Account';
 
 const Stack = createStackNavigator();
 
+//主頁面home
 function Home() {
   return (
     <View />
