@@ -7,15 +7,10 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import AccountScreen from './src/Account';
+import Home from './src/Home';
 
 const Stack = createStackNavigator();
 
-//主頁面home
-function Home() {
-  return (
-    <View />
-  );
-}
 
 
 function HomeScreen() {
