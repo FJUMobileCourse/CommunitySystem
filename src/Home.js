@@ -2,12 +2,13 @@ import React, { Component } from 'react';
 import { Image, StyleSheet, Text, View, Button } from "react-native";
 import { useNavigation } from '@react-navigation/native';
 import logo from '../assets/community.png';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+
+
+const Stack = createStackNavigator();
 
 function reservation() {
-
-}
-
-function forum() {
 
 }
 
@@ -23,8 +24,7 @@ function packages() {
 
 
 //主頁面home
-export default class Home extends Component {
-    render() {
+export default function Home({navigation}) {
         return (
             <View style={styles.container}>
                 <Image source={logo} style={styles.logo} />
@@ -32,15 +32,14 @@ export default class Home extends Component {
                 </View>
                 <View style={styles.forbuttonsone}>
                     <Button onPress={reservation} title="公設預約" />
-                    <Button onPress={forum} title="住戶討論" />
+                    <Button onPress={() => navigation.navigate("Forum")} title="住戶討論區" />
                 </View>
                 <View style={styles.forbuttonstwo}>
-                    <Button onPress={board} title="社區布告欄" />
+                    <Button onPress={board} title="社區佈告欄" />
                     <Button onPress={packages} title="包裹領取" />
                 </View>
             </View>
         );
-    }
 }
 
 const styles = StyleSheet.create({
