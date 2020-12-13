@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import * as React from "react";
-import { Text, View, Image } from "react-native";
+import { Text, View, Image, Button } from "react-native";
 import { Ionicons } from '@expo/vector-icons';
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -27,12 +27,7 @@ function HomeScreen() {
       />
       <Stack.Screen name="Forum" options={{ title: '住戶討論區' }} component={Forum} />
       <Stack.Screen name="PostDetail" options={{ title: '詳細內容' }} component={PostDetail} />
-      <Stack.Screen name="EditPost"
-        options={{ title: '編輯貼文', 
-                    headerBackTitleVisible: false, 
-                    headerBackImage: () => <Image style={styles.backImage} source={require('./src/image/cross.png')} />
-                    }} 
-        component={EditPost} />
+      <Stack.Screen name="EditPost" options={{ title: '編輯貼文' }} component={EditPost} />
     </Stack.Navigator>
   );
 }
