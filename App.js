@@ -3,6 +3,11 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Navigator } from 'react-native'
 
+import PackageHome from './src/package/PackageHome';
+import PackageDetail from './src/package/PackageDetail';
+
+const Stack = createStackNavigator();
+
 export default function App() {
   return (
     <View style={styles.container}>
