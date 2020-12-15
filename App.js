@@ -1,21 +1,60 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { Navigator } from 'react-native'
+import { StyleSheet, Text, View, Stack } from 'react-native';
+import { Navigator } from 'react-native';
+import 'react-native-gesture-handler';
+import { useNavigation } from '@react-navigation/native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 
 import PackageHome from './src/package/PackageHome';
 import PackageDetail from './src/package/PackageDetail';
 
+
+function PackageHomeScreen() {
+
+  return (
+
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+
+      <Text>Home Screen</Text>
+
+    </View>
+
+  );
+
+}
+
+
+
 const Stack = createStackNavigator();
 
-export default function App() {
+
+
+function App() {
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+
+    <NavigationContainer>
+
+      <Stack.Navigator>
+
+        <Stack.Screen name="Home" component={PackageHomeScreen} />
+
+      </Stack.Navigator>
+
+    </NavigationContainer>
+
   );
+
 }
+
+
+
+export default App;
+
+
+
 
 const styles = StyleSheet.create({
   container: {
