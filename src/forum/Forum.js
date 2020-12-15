@@ -3,18 +3,17 @@ import React, { useState, Component, useEffect } from 'react';
 import { FlatList, View, Text, Button, Modal } from 'react-native';
 import { Container, Content, Card, CardItem, Left, Right, Body, Icon, Thumbnail, Fab } from 'native-base';
 import styles from '../styles';
+import AddPost from './AddPost';
 import axios from 'axios';
-
+import Moment from 'moment';
+import {axios_config, url} from '../Config';
 
 export default function Index({ navigation }) {
-    const axios_config = { headers: {'Authorization': 'Bearer key8HkwZJa0X67dRO'} };
-    const url="https://api.airtable.com/v0/appueWqqS6bw4lpMD/Forum?maxRecords=30&view=Grid%20view";
-
+    const finalUrl = url+'Forum?maxRecords=30&view=Grid%20view';
+    
     const [posts, setPost] = useState([]);
+    const [modalVisible, setModalVisible] = useState(false);  
 
-    const data = [
-        { pic: "url", Publisher: "社區管理員", PostTime: "12/01 10:23 am", PostContent: "社區公告讓社區住戶里民不錯過第一手訊息，管委會多了一項工具能夠發布重要訊息，線上e化環保更有效率!!!", CommentAmount: "15" }
-    ];
 
     const renderItem = ({ item }) => (
         <Card>
@@ -25,7 +24,7 @@ export default function Index({ navigation }) {
                         <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                             <Text>{item.fields.Name}</Text>
                             <Right>
-                                <Text>{item.fields.PostTime}</Text>
+                                <Text>{Moment(item.fields.PostTime).format('YYYY-MM-DD HH:mm')}</Text>
                             </Right>
                         </View>
                     </Body>
@@ -48,14 +47,18 @@ export default function Index({ navigation }) {
     )
 
     async function fetchData () {
-        const result = await axios.get(url,axios_config);
+        const result = await axios.get(finalUrl,axios_config);
         console.log(result);
         setPost(result.data.records);
     }
 
     useEffect(() => {
         fetchData();
-      },[]);
+    }, [modalVisible]);
+
+    function AddFormVisibleOrNot() {
+        setModalVisible(false);
+    }
 
     return (
         <Container style={styles.container}>
@@ -72,10 +75,11 @@ export default function Index({ navigation }) {
                 containerStyle={{}}
                 style={{ backgroundColor: '#0080FF' }}
                 position="bottomRight"
-                onPress={() => alert("I want to add post!!!!")}>
+                onPress={() => setModalVisible(true)}>
                 {/* Icon位置好像隨著手機不同會位移 */}
                 <Icon active name="add" style={{ fontSize: 35, marginTop: 10 }} />
             </Fab>
+            <AddPost modalVisible={modalVisible} AddFormVisibleOrNot={AddFormVisibleOrNot} />
         </Container>
     );
 }
