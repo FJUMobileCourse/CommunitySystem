@@ -52,7 +52,9 @@ const styles = StyleSheet.create({
     height:20,
     margin:10
   },
-
+  modal:{
+    marginTop:50
+  }
 
 
 
