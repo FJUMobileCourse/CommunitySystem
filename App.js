@@ -1,13 +1,17 @@
 import { StatusBar } from 'expo-status-bar';
 import * as React from "react";
-import { Text, View } from "react-native";
+import { Text, View, Image, Button } from "react-native";
 import { Ionicons } from '@expo/vector-icons';
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import styles from './src/styles';
 
-import AccountScreen from './src/account/SignUp';
+import AccountScreen from './src/Account';
 import Home from './src/Home';
+import Forum from './src/forum/Forum';
+import PostDetail from './src/forum/PostDetail';
+import EditPost from './src/forum/EditPost';
 
 const Stack = createStackNavigator();
 
@@ -21,6 +25,9 @@ function HomeScreen() {
         component={Home}
         options={{ tabBarLabel: 'Home' }}
       />
+      <Stack.Screen name="Forum" options={{ title: '住戶討論區' }} component={Forum} />
+      <Stack.Screen name="PostDetail" options={{ title: '詳細內容' }} component={PostDetail} />
+      <Stack.Screen name="EditPost" options={{ title: '編輯貼文' }} component={EditPost} />
     </Stack.Navigator>
   );
 }
