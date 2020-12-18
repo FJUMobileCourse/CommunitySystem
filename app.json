@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "test-reactnative",
-    "slug": "test-reactnative",
+    "name": "reactnative",
+    "slug": "reactnative",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
