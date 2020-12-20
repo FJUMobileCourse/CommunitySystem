@@ -36,7 +36,7 @@ export default function Home({navigation}) {
                 </View>
                 <View style={styles.forbuttonstwo}>
                     <Button onPress={board} title="社區佈告欄" />
-                    <Button onPress={packages} title="包裹領取" />
+                    <Button onPress={() => navigation.navigate("PackageHome")} title="包裹領取" />
                 </View>
             </View>
         );
