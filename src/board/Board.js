@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FlatList, SafeAreaView, StatusBar, StyleSheet, Text, TouchableOpacityㄝView } from "react-native";
+import { FlatList, SafeAreaView, StatusBar, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 const data = [
   { id: "iPhone 7", title: 12000 },
@@ -55,4 +55,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default App;
+export default Board;
