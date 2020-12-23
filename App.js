@@ -7,7 +7,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import styles from './src/styles';
 
-import AccountScreen from './src/Account';
+import AccountScreen from './src/account/SignUp';
 import Home from './src/Home';
 import Forum from './src/forum/Forum';
 import PostDetail from './src/forum/PostDetail';
@@ -77,3 +77,4 @@ export default function App(){
     </NavigationContainer>
   );
 }
+
