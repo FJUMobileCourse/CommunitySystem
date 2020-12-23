@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {Button, View, Text, TextInput } from 'react-native';
-import styles from '../styles';
+import styles from './SignUpStyles';
 
 export default function SignUp() {
   const [displayName, setDisplayName] = useState("");
@@ -9,7 +9,7 @@ export default function SignUp() {
   
 
   return(
-    <View style={styles.form}>  
+    <View style={styles.form}>
       <TextInput
         style={styles.inputStyle}
         placeholder="姓名"
@@ -22,6 +22,7 @@ export default function SignUp() {
         value={email}
         onChangeText={text=>setEmail(text)}
       />
+
       <TextInput
         style={styles.inputStyle}
         placeholder="密碼"
