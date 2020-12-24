@@ -12,6 +12,7 @@ import Home from './src/Home';
 import Forum from './src/forum/Forum';
 import PostDetail from './src/forum/PostDetail';
 import EditPost from './src/forum/EditPost';
+import AddPost from './src/forum/AddPost';
 
 const Stack = createStackNavigator();
 
@@ -28,6 +29,7 @@ function HomeScreen() {
       <Stack.Screen name="Forum" options={{ title: '住戶討論區' }} component={Forum} />
       <Stack.Screen name="PostDetail" options={{ title: '詳細內容' }} component={PostDetail} />
       <Stack.Screen name="EditPost" options={{ title: '編輯貼文' }} component={EditPost} />
+      <Stack.Screen name="AddPost" options={{ title: '新增貼文' }} component={AddPost} />
     </Stack.Navigator>
   );
 }
