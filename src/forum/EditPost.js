@@ -1,6 +1,6 @@
-import React, {useState} from 'react';
-import { View,Text } from 'native-base';
-import { Button, Image} from 'react-native';
+import React, { useState } from 'react';
+import { View, Text } from 'native-base';
+import { Button, Image } from 'react-native';
 import styles from '../styles';
 
 export default function EditPost({ navigation }) {
@@ -10,7 +10,7 @@ export default function EditPost({ navigation }) {
             headerBackTitleVisible: false,
             headerBackImage: () => <Image style={styles.backImage} source={require('../image/cross.png')} />,
             headerRight: () => (
-                <Button onPress={ DoModify } title="儲存" />
+                <Button onPress={DoModify} title="儲存" />
             ),
         });
     }, [navigation]);
@@ -19,7 +19,7 @@ export default function EditPost({ navigation }) {
 
 
     //當按下儲存時
-    function DoModify(){
+    function DoModify() {
         alert("編輯完後要存檔");
 
     }

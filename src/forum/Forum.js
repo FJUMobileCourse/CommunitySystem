@@ -3,17 +3,22 @@ import React, { useState, Component, useEffect } from 'react';
 import { FlatList, View, Text, Button, Modal } from 'react-native';
 import { Container, Content, Card, CardItem, Left, Right, Body, Icon, Thumbnail, Fab } from 'native-base';
 import styles from '../styles';
-import AddPost from './AddPost';
 import axios from 'axios';
 import Moment from 'moment';
-import {axios_config, url} from '../Config';
+import { axios_config, url } from '../Config';
 
 export default function Index({ navigation }) {
-    const finalUrl = url+'Forum?maxRecords=30&view=Grid%20view';
-    
+    const finalUrl = url + 'Forum?maxRecords=30&view=Grid%20view';
     const [posts, setPost] = useState([]);
-    const [modalVisible, setModalVisible] = useState(false);  
 
+    //只要到佈告欄頁面就重新render頁面
+    React.useEffect(() => {
+        const unsubscribe = navigation.addListener('focus', () => {
+          fetchData();
+        });
+        //類似停止監聽
+        return unsubscribe;
+      }, [navigation]);
 
     const renderItem = ({ item }) => (
         <Card>
@@ -30,13 +35,11 @@ export default function Index({ navigation }) {
                     </Body>
                 </Left>
             </CardItem>
-            {/* 到時候導到PostDetail要隨著點擊的文不同，而導去不同的頁面 */}
-            <CardItem header bordered button onPress={() => navigation.navigate('PostDetail')}>
+            <CardItem header bordered button onPress={() => navigation.navigate('PostDetail', { itemId: item.id })}>
                 <Body>
                     <Text>{item.fields.PostContent}</Text>
                 </Body>
             </CardItem>
-            {/* 到時候導到PostDetail要隨著點擊的文不同，而導去不同的頁面 */}
             <CardItem button onPress={() => navigation.navigate('PostDetail')}>
                 <Right style={styles.comment}>
                     <Icon active name="chatbubbles" style={{ marginRight: 5 }} />
@@ -46,28 +49,24 @@ export default function Index({ navigation }) {
         </Card>
     )
 
-    async function fetchData () {
-        const result = await axios.get(finalUrl,axios_config);
-        console.log(result);
-        setPost(result.data.records);
+    async function fetchData() {
+        try {
+            const result = await axios.get(finalUrl, axios_config);
+            setPost(result.data.records);
+        }
+        catch (e) {
+            console.log(e);
+        }
     }
 
-    useEffect(() => {
-        fetchData();
-    }, [modalVisible]);
-
-    function AddFormVisibleOrNot() {
-        setModalVisible(false);
-    }
 
     return (
         <Container style={styles.container}>
-            <Content style={styles.item}>
-                <FlatList
-                    data={posts}
-                    renderItem={renderItem}
-                    keyExtractor={item => item.fields.Publisher} />
-            </Content>
+            <FlatList
+                style={styles.item}
+                data={posts}
+                renderItem={renderItem}
+                keyExtractor={item => item.fields.PostID.toString()} />
 
             <Fab
                 active="true"
@@ -75,11 +74,10 @@ export default function Index({ navigation }) {
                 containerStyle={{}}
                 style={{ backgroundColor: '#0080FF' }}
                 position="bottomRight"
-                onPress={() => setModalVisible(true)}>
+                onPress={() => navigation.navigate('AddPost')}>
                 {/* Icon位置好像隨著手機不同會位移 */}
                 <Icon active name="add" style={{ fontSize: 35, marginTop: 10 }} />
             </Fab>
-            <AddPost modalVisible={modalVisible} AddFormVisibleOrNot={AddFormVisibleOrNot} />
         </Container>
     );
 }

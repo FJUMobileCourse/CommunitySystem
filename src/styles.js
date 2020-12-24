@@ -10,6 +10,14 @@ const styles = StyleSheet.create({
       margin: 0,
       marginTop: StatusBar.currentHeight || 0,
     },
+    view: {
+      flex: 1,
+      flexDirection: 'row',
+      backgroundColor: '#fff',
+      justifyContent: 'center',
+      margin: 0,
+      marginTop: StatusBar.currentHeight || 0,
+    },
     item: {
         margin: 10,
     },
@@ -53,8 +61,9 @@ const styles = StyleSheet.create({
     margin:10
   },
   modal:{
-    marginTop:50
-  }
+    margin:30
+  },
+  
 
 
 
