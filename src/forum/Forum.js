@@ -10,15 +10,16 @@ import { axios_config, url } from '../Config';
 export default function Index({ navigation }) {
     const finalUrl = url + 'Forum?maxRecords=30&view=Grid%20view';
     const [posts, setPost] = useState([]);
+    const [selectedId, setSelectedId] = useState(null);
 
     //只要到佈告欄頁面就重新render頁面
     React.useEffect(() => {
         const unsubscribe = navigation.addListener('focus', () => {
-          fetchData();
+            fetchData();
         });
         //類似停止監聽
         return unsubscribe;
-      }, [navigation]);
+    }, [navigation]);
 
     const renderItem = ({ item }) => (
         <Card>
@@ -35,12 +36,12 @@ export default function Index({ navigation }) {
                     </Body>
                 </Left>
             </CardItem>
-            <CardItem header bordered button onPress={() => navigation.navigate('PostDetail', { itemId: item.id })}>
+            <CardItem header bordered>
                 <Body>
                     <Text>{item.fields.PostContent}</Text>
                 </Body>
             </CardItem>
-            <CardItem button onPress={() => navigation.navigate('PostDetail')}>
+            <CardItem button onPress={() => GoToPostDetail(item.id)}>
                 <Right style={styles.comment}>
                     <Icon active name="chatbubbles" style={{ marginRight: 5 }} />
                 </Right>
@@ -59,6 +60,9 @@ export default function Index({ navigation }) {
         }
     }
 
+    function GoToPostDetail(id) {
+        navigation.navigate('PostDetail', { itemId: id });
+    }
 
     return (
         <Container style={styles.container}>

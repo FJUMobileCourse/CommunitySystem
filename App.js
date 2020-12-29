@@ -49,8 +49,8 @@ const Tab = createBottomTabNavigator();
 }
 */
 
-export default function App(){
-//function App() {
+export default function App() {
+  //function App() {
   return (
     <NavigationContainer>
       <Tab.Navigator

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Text, TouchableOpacity, View, Image, TextInput, FlatList } from 'react-native';
+import { Text, TouchableOpacity, View, Image, TextInput, KeyboardAvoidingView, Platform, FlatList } from 'react-native';
 import { Container, Content, Card, CardItem, Left, Right, Body, Icon, Thumbnail, List, ListItem, Item, Input, Button } from 'native-base';
 import styles from '../styles';
 import { SwipeListView } from 'react-native-swipe-list-view';
@@ -7,14 +7,17 @@ import OptionsMenu from 'react-native-option-menu';
 import { axios_config, url } from '../Config';
 import axios from 'axios';
 import Moment from 'moment';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 export default function PostDetail({ route, navigation }) {
     const MoreIcon = require('../image/more-menu.jpg');
-
+    const finalUrl = url + 'Comment?maxRecords=30&view=Grid%20view';
     const [posts, setPosts] = useState(null);
     const [comments, setCommemts] = useState([]);
-    const getPostUrl = url + 'Forum/' + route.params.itemId;
+    const [addContent, setAddContent] = useState("");
+    var getPostUrl = url + 'Forum/' + route.params.itemId;
     var getCommentUrl;
+    //var getPostUrl = url + 'Forum/' + 'rec91zlN7eqOLqV5p'; //PostID = 70，先寫死
 
     //只要到貼文詳細頁面就重新render頁面
     React.useEffect(() => {
@@ -33,14 +36,9 @@ export default function PostDetail({ route, navigation }) {
         }
     }, [posts])
 
-    //刪除留言後要重新fetchComment
-    // useEffect(() => {
-    //     fetchComment();
-    // }, [comments])
-
     const renderItem = (data, rowMap) => (
-        <View>
-            <ListItem avatar style={styles.rowFront} onPress={() => rowMap[data.item.fields.CommentID].closeRow()}>
+        <View style={styles.rowFront} >
+            <ListItem avatar onPress={() => rowMap[data.item.fields.CommentID].closeRow()}>
                 <Left>
                     <Thumbnail small source={data.item.fields.ProfilePic} />
                 </Left>
@@ -61,7 +59,7 @@ export default function PostDetail({ route, navigation }) {
         <View style={styles.rowBack}>
             <TouchableOpacity
                 style={[styles.backRightBtn, styles.backRightBtnRight]}
-                onPress={() => alert("刪除啦，要先closeRow再刪除這行")}
+                onPress={() => DeleteComment(data.item, rowMap)}
             >
                 <Icon name="trash" style={{ color: '#fff', fontSize: 25 }} />
             </TouchableOpacity>
@@ -81,7 +79,6 @@ export default function PostDetail({ route, navigation }) {
     async function fetchComment() {
         try {
             const resultOfComment = await axios.get(getCommentUrl, axios_config);
-            console.log(resultOfComment.data.records);
             setCommemts(resultOfComment.data.records);
         }
         catch (e) {
@@ -90,11 +87,14 @@ export default function PostDetail({ route, navigation }) {
     }
 
     function EditPost() {
-        navigation.navigate('EditPost');
+        navigation.navigate('EditPost', {
+            itemId: posts.id,
+            postContent: posts.fields.PostContent
+        });
     }
 
+    //TODO: 直接刪貼文也要連留言一起刪掉！
     async function DeletePost() {
-        //alert("刪除貼文");
         await axios.delete(getPostUrl, axios_config)
             .then(
                 navigation.navigate('Forum')
@@ -102,63 +102,120 @@ export default function PostDetail({ route, navigation }) {
             .catch(error => console.log(error))
     }
 
-    return (
-        <Container style={styles.view}>
-            <SwipeListView style={styles.item}
-                ListHeaderComponent={
-                    <Card>
-                        <CardItem bordered>
-                            <Left>
-                                <Thumbnail small source={posts && posts.fields.ProfilePic} />
-                                <Body>
-                                    <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
-                                        <Text>{posts && posts.fields.Name}</Text>
-                                        <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center' }}>
-                                            <OptionsMenu
-                                                button={MoreIcon}
-                                                buttonStyle={{ width: 16, height: 16, resizeMode: "contain" }}
-                                                destructiveIndex={1}
-                                                options={["編輯貼文", "刪除", "取消"]}
-                                                actions={[EditPost, DeletePost]}
-                                            />
-                                        </View>
-                                    </View>
-                                </Body>
+    async function DeleteComment(item, rowMap) {
+        const deleteCommentUrl = url + 'Comment/' + item.id;
+        rowMap[item.fields.CommentID].closeRow();
 
-                            </Left>
-                        </CardItem>
-                        <CardItem header bordered>
-                            <Body>
-                                <Text>{posts && posts.fields.PostContent}</Text>
+        try {
+            await axios.delete(deleteCommentUrl, axios_config);
+            getCommentUrl = url + 'Comment?filterByFormula=PostID+%3D+' + posts.fields.PostID.toString() + '&sort%5B0%5D%5Bfield%5D=CommentTime&sort%5B0%5D%5Bdirection%5D=asc'
+            fetchComment();
+        }
+        catch (e) {
+            console.log(e);
+        }
+    }
+
+    async function InsertComment() {
+        const newComment = {
+            fields: {
+                Content: addContent,
+                CommentTime: new Date(),
+                Forum: [posts.id],
+                Member: ["recLmKb1fowhZ8iig"] //住戶A，要記得改!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            }
+        }
+        try {
+            await axios.post(finalUrl, newComment, axios_config);
+            setAddContent('');
+            getCommentUrl = url + 'Comment?filterByFormula=PostID+%3D+' + posts.fields.PostID.toString() + '&sort%5B0%5D%5Bfield%5D=CommentTime&sort%5B0%5D%5Bdirection%5D=asc'
+            fetchComment();
+        }
+        catch (e) {
+            console.log("error:" + e);
+        }
+    }
+
+
+    // TODO: KeyboardAvoidingView
+
+    // <KeyboardAvoidingView
+    //     keyboardVerticalOffset={1300}
+    //     enabled={true}
+    //     style={{ flex: 1 }}
+    //     behavior="padding" >
+    // </KeyboardAvoidingView>
+    return (
+        <Container>
+            {/* <KeyboardAvoidingView
+                style={{ flex: 1 }}
+                behavior="padding"> */}
+            <KeyboardAwareScrollView>
+                <SwipeListView style={styles.item}
+                    ListHeaderComponent={
+                        <Card>
+                            <CardItem bordered>
+                                <Left>
+                                    <Thumbnail small source={posts && posts.fields.ProfilePic} />
+                                    <Body>
+                                        <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
+                                            <Text>{posts && posts.fields.Name}</Text>
+                                            <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center' }}>
+                                                <OptionsMenu
+                                                    button={MoreIcon}
+                                                    buttonStyle={{ width: 16, height: 16, resizeMode: "contain" }}
+                                                    destructiveIndex={1}
+                                                    options={["編輯貼文", "刪除", "取消"]}
+                                                    actions={[EditPost, DeletePost]}
+                                                />
+                                            </View>
+                                        </View>
+                                    </Body>
+                                </Left>
+                            </CardItem>
+                            <CardItem header bordered>
+                                <Body>
+                                    <Text>{posts && posts.fields.PostContent}</Text>
+                                </Body>
+                            </CardItem>
+                        </Card>
+                    }
+                    data={comments}
+                    renderItem={renderItem}
+                    renderHiddenItem={renderHiddenItem}
+                    keyExtractor={item => item.fields.CommentID.toString()}
+                    rightOpenValue={-75}
+                    previewOpenValue={-40}
+                    previewOpenDelay={3000}
+                    closeOnRowPress={true}
+                    disableRightSwipe={true}
+                    ListFooterComponent={
+                        <ListItem avatar>
+                            <Body >
+                                <View style={{ flex: 1, flexDirection: 'row' }}>
+                                    <View style={{ flex: 1, flexDirection: 'row' }}>
+                                        <TextInput
+                                            style={{ fontSize: 15, width: 270 }}
+                                            placeholder="請寫下你的留言…"
+                                            multiline={true}
+                                            onChangeText={text => setAddContent(text)}
+                                            value={addContent}
+                                        />
+                                    </View>
+                                    <View>
+                                        {/* Button送出->要固定在下方 */}
+                                        <Button style={{ backgroundColor: '#0080FF', height: 30, width: 50, justifyContent: 'center', alignItems: 'center' }}
+                                            onPress={InsertComment}>
+                                            <Text style={{ color: '#ffffff' }}>送出</Text>
+                                        </Button>
+                                    </View>
+                                </View>
                             </Body>
-                        </CardItem>
-                    </Card>
-                }
-                data={comments}
-                renderItem={renderItem}
-                renderHiddenItem={renderHiddenItem}
-                keyExtractor={item => item.fields.CommentID.toString()}
-                rightOpenValue={-75}
-                previewOpenValue={-40}
-                previewOpenDelay={3000}
-                closeOnRowPress={true}
-                disableRightSwipe={true}
-                ListFooterComponent={
-                    <ListItem avatar>
-                        <Body>
-                            <View style={{ flex: 1, flexDirection: 'row' }}>
-                                <Input style={{ fontSize: 15 }}
-                                    placeholder="請寫下你的留言…"
-                                    multiline={true} />
-                                {/* Button送出->要固定在下方 */}
-                                <Button style={{ backgroundColor: '#0080FF', width: 50, justifyContent: 'center', alignItems: 'center' }}>
-                                    <Text style={{ color: '#ffffff' }}>送出</Text>
-                                </Button>
-                            </View>
-                        </Body>
-                    </ListItem>
-                }
-            />
+                        </ListItem>
+                    }
+                />
+            </KeyboardAwareScrollView>
+            {/* </KeyboardAvoidingView> */}
         </Container>
     )
 }
