@@ -13,15 +13,8 @@ import Forum from './src/forum/Forum';
 import PostDetail from './src/forum/PostDetail';
 import EditPost from './src/forum/EditPost';
 import Board from './src/board/Board';
-import Reservation from './src/reservation/Reservation';
-import Package from './src/package/Package';
-
-
-
 
 const Stack = createStackNavigator();
-
-
 
 function HomeScreen() {
   return (
@@ -35,8 +28,6 @@ function HomeScreen() {
       <Stack.Screen name="PostDetail" options={{ title: '詳細內容' }} component={PostDetail} />
       <Stack.Screen name="EditPost" options={{ title: '編輯貼文' }} component={EditPost} />
           <Stack.Screen name="Board" options={{ title: '社區布告欄' }} component={Board} />
-          <Stack.Screen name="Reservation" options={{ title: '公設預約' }} component={Reservation} />
-          <Stack.Screen name="Package" options={{ title: '包裹預約' }} component={Package} />
     </Stack.Navigator>
   );
 }
@@ -66,9 +57,9 @@ export default function App(){
             let iconName;
 
             if (route.name === 'Home') {
-              iconName = focused ? 'ios-home' : 'ios-home';
+              iconName = focused ? 'home' : 'home-outline';
             } else if (route.name === 'Account') {
-              iconName = focused ? 'ios-contact' : 'ios-contact';
+              iconName = focused ? 'man' : 'man-outline';
             }
 
             return <Ionicons name={iconName} size={size} color={color} />;
