@@ -7,16 +7,14 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import styles from './src/styles';
 
-import AccountScreen from './src/account/SignUp';
+import AccountScreen from './src/Account';
 import Home from './src/Home';
 import Forum from './src/forum/Forum';
 import PostDetail from './src/forum/PostDetail';
 import EditPost from './src/forum/EditPost';
-import AddPost from './src/forum/AddPost';
+import Board from './src/board/Board';
 
 const Stack = createStackNavigator();
-
-
 
 function HomeScreen() {
   return (
@@ -29,28 +27,15 @@ function HomeScreen() {
       <Stack.Screen name="Forum" options={{ title: '住戶討論區' }} component={Forum} />
       <Stack.Screen name="PostDetail" options={{ title: '詳細內容' }} component={PostDetail} />
       <Stack.Screen name="EditPost" options={{ title: '編輯貼文' }} component={EditPost} />
-      <Stack.Screen name="AddPost" options={{ title: '新增貼文' }} component={AddPost} />
+          <Stack.Screen name="Board" options={{ title: '社區布告欄' }} component={Board} />
     </Stack.Navigator>
   );
 }
 
-
 const Tab = createBottomTabNavigator();
 
-/*function App() {
-  return (
-    <NavigationContainer>
-      <Tab.Navigator>
-        <Tab.Screen name="Home" component={HomeScreen} />
-        <Tab.Screen name="Account" component={AccountScreen} />
-      </Tab.Navigator>
-    </NavigationContainer>
-  );
-}
-*/
-
-export default function App() {
-  //function App() {
+export default function App(){
+//function App() {
   return (
     <NavigationContainer>
       <Tab.Navigator
@@ -59,12 +44,11 @@ export default function App() {
             let iconName;
 
             if (route.name === 'Home') {
-              iconName = focused ? 'ios-home' : 'ios-home';
+              iconName = focused ? 'ios-home' : 'ios-home-outline';
             } else if (route.name === 'Account') {
-              iconName = focused ? 'ios-contact' : 'ios-contact';
+              iconName = focused ? 'ios-man' : 'ios-man-outline';
             }
 
-            // You can return any component that you like here!
             return <Ionicons name={iconName} size={size} color={color} />;
           },
         })}
@@ -79,4 +63,3 @@ export default function App() {
     </NavigationContainer>
   );
 }
-
