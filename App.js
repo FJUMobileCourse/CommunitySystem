@@ -22,9 +22,9 @@ function HomeScreen() {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="Home"
+        name="社區服務"
         component={Home}
-        options={{ tabBarLabel: 'Home' }}
+        options={{ tabBarLabel: '社區服務' }}
       />
       <Stack.Screen name="Forum" options={{ title: '住戶討論區' }} component={Forum} />
       <Stack.Screen name="PostDetail" options={{ title: '詳細內容' }} component={PostDetail} />
@@ -58,9 +58,9 @@ export default function App() {
           tabBarIcon: ({ focused, color, size }) => {
             let iconName;
 
-            if (route.name === 'Home') {
+            if (route.name === '首頁') {
               iconName = focused ? 'ios-home' : 'ios-home';
-            } else if (route.name === 'Account') {
+            } else if (route.name === '會員中心') {
               iconName = focused ? 'ios-contact' : 'ios-contact';
             }
 
@@ -73,8 +73,8 @@ export default function App() {
           inactiveTintColor: 'gray',
         }}
       >
-        <Tab.Screen name="Home" component={HomeScreen} />
-        <Tab.Screen name="Account" component={AccountScreen} />
+        <Tab.Screen name="首頁" component={HomeScreen} />
+        <Tab.Screen name="會員中心" component={AccountScreen} />
       </Tab.Navigator>
     </NavigationContainer>
   );
