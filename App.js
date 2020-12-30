@@ -2,6 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import * as React from "react";
 import { Text, View, Image, Button } from "react-native";
 import { Ionicons } from '@expo/vector-icons';
+
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -34,6 +35,7 @@ function HomeScreen() {
 
 const Tab = createBottomTabNavigator();
 
+
 export default function App(){
 //function App() {
   return (
@@ -44,9 +46,9 @@ export default function App(){
             let iconName;
 
             if (route.name === 'Home') {
-              iconName = focused ? 'ios-home' : 'ios-home-outline';
+              iconName = focused ? 'ios-home' : 'ios-home';
             } else if (route.name === 'Account') {
-              iconName = focused ? 'ios-man' : 'ios-man-outline';
+              iconName = focused ? 'ios-car' : 'ios-car';
             }
 
             return <Ionicons name={iconName} size={size} color={color} />;
@@ -61,5 +63,7 @@ export default function App(){
         <Tab.Screen name="Account" component={AccountScreen} />
       </Tab.Navigator>
     </NavigationContainer>
+    
   );
+  
 }
