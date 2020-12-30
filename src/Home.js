@@ -31,7 +31,7 @@ export default function Home({navigation}) {
                 <View style={{ flex: 1 }}>
                 </View>
                 <View style={styles.forbuttonsone}>
-                    <Button onPress={() => navigation.navigate("reservation")} title="公設預約" />
+                    <Button onPress={() => navigation.navigate("Reservation")} title="公設預約" />
                     <Button onPress={() => navigation.navigate("Forum")} title="住戶討論區" />
                 </View>
                 <View style={styles.forbuttonstwo}>

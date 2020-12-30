@@ -9,6 +9,7 @@ import styles from './src/styles';
 
 import AccountScreen from './src/account/SignUp';
 import Home from './src/Home';
+import Reservation from './src/publicFacility/reservation';
 import Forum from './src/forum/Forum';
 import PostDetail from './src/forum/PostDetail';
 import EditPost from './src/forum/EditPost';
@@ -25,13 +26,28 @@ function HomeScreen() {
         component={Home}
         options={{ tabBarLabel: 'Home' }}
       />
-      <Stack.Screen name="Forum" options={{ title: '住戶討論區' }} component={Forum} />
+      <Stack.Screen name="Reservation" options={{ title: '公設預約' }} component={Reservation} />
+      {/* <Stack.Screen name="Forum" options={{ title: '住戶討論區' }} component={Forum} />
       <Stack.Screen name="PostDetail" options={{ title: '詳細內容' }} component={PostDetail} />
-      <Stack.Screen name="EditPost" options={{ title: '編輯貼文' }} component={EditPost} />
+      <Stack.Screen name="EditPost" options={{ title: '編輯貼文' }} component={EditPost} /> */}
     </Stack.Navigator>
   );
 }
 
+function ReservationScreen() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="Home"
+        component={Home}
+        options={{ tabBarLabel: 'Home' }}
+      />
+      <Stack.Screen name="Reservation" options={{ title: '公設預約' }} component={Reservation} />
+      {/* <Stack.Screen name="PostDetail" options={{ title: '詳細內容' }} component={PostDetail} />
+      <Stack.Screen name="EditPost" options={{ title: '編輯貼文' }} component={EditPost} /> */}
+    </Stack.Navigator>
+  );
+}
 
 const Tab = createBottomTabNavigator();
 
