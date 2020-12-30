@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Text, TouchableOpacity, View, Image, TextInput, KeyboardAvoidingView, Platform, FlatList } from 'react-native';
+import { Text, TouchableOpacity, View, Image, TextInput, KeyboardAvoidingView, Platform, Alert } from 'react-native';
 import { Container, Content, Card, CardItem, Left, Right, Body, Icon, Thumbnail, List, ListItem, Item, Input, Button } from 'native-base';
 import styles from '../styles';
 import { SwipeListView } from 'react-native-swipe-list-view';
@@ -17,6 +17,7 @@ export default function PostDetail({ route, navigation }) {
     const [addContent, setAddContent] = useState("");
     var getPostUrl = url + 'Forum/' + route.params.itemId;
     var getCommentUrl;
+    var commentArray = [];
     //var getPostUrl = url + 'Forum/' + 'rec91zlN7eqOLqV5p'; //PostID = 70，先寫死
 
     //只要到貼文詳細頁面就重新render頁面
@@ -93,13 +94,46 @@ export default function PostDetail({ route, navigation }) {
         });
     }
 
-    //TODO: 直接刪貼文也要連留言一起刪掉！
+    const confirmDeleteMessage = () => {
+        Alert.alert("", "確定要刪除嗎？\n(留言也將一併刪除)",
+            [
+                {
+                    text: "取消",
+                    onPress: () => console.log("Cancel Pressed"),
+                    style: "cancel"
+                },
+                {
+                    text: "刪除",
+                    onPress: DeletePost
+                }
+            ]
+        );
+    }
+        
     async function DeletePost() {
+        //先刪貼文
         await axios.delete(getPostUrl, axios_config)
             .then(
                 navigation.navigate('Forum')
             )
             .catch(error => console.log(error))
+
+        //再刪該貼文之留言，這裡要一次刪多筆 records[]=id ，上限10筆。格式 EX：Comment?records[]=recyLhlkQ5wtoBJS7&records[]=recp2fMmuX4QAvBbp
+        for (let i = 0; i < comments.length; i++) {
+            commentArray.push(comments[i].id);
+        }
+
+        var arrayUrl = commentArray.map(function(value){
+            return 'records[]=' + value; 
+        }).join('&');
+        const deleteCommentUrl = url + 'Comment?' + arrayUrl;
+
+        try {
+            await axios.delete(deleteCommentUrl, axios_config);
+        }
+        catch (e) {
+            console.log(e);
+        }
     }
 
     async function DeleteComment(item, rowMap) {
@@ -166,7 +200,7 @@ export default function PostDetail({ route, navigation }) {
                                                     buttonStyle={{ width: 16, height: 16, resizeMode: "contain" }}
                                                     destructiveIndex={1}
                                                     options={["編輯貼文", "刪除", "取消"]}
-                                                    actions={[EditPost, DeletePost]}
+                                                    actions={[EditPost, confirmDeleteMessage]}
                                                 />
                                             </View>
                                         </View>
