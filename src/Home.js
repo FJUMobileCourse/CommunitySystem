@@ -36,7 +36,7 @@ export default function Home({navigation}) {
                 </View>
                 <View style={styles.forbuttonstwo}>
                     <Button onPress={board} title="社區佈告欄" />
-                    <Button onPress={packages} title="包裹領取" />
+                    <Button onPress={() => navigation.navigate("PackageHome")} title="包裹領取" />
                 </View>
             </View>
         );
@@ -59,13 +59,13 @@ const styles = StyleSheet.create({
     color: '#888',
     fontSize: 18,
     marginHorizontal: 15,
-    }, 
+  },
   forbuttonsone: {
-      flex: 2,
-      flexDirection:'row',
-    },
-    forbuttonstwo: {
-      flex: 2,
-      flexDirection: 'row',
-    },
+    flex: 2,
+    flexDirection: 'row',
+  },
+  forbuttonstwo: {
+    flex: 2,
+    flexDirection: 'row',
+  },
 });
