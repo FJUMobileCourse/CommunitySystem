@@ -7,13 +7,16 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import styles from './src/styles';
 
-import AccountScreen from './src/account/SignUp';
+import SignUp from './src/account/SignUp';
 import Home from './src/Home';
 import Forum from './src/forum/Forum';
 import PostDetail from './src/forum/PostDetail';
 import EditPost from './src/forum/EditPost';
+import SignIn from './src/account/SignIn';
 
 const Stack = createStackNavigator();
+
+const Account = createStackNavigator();
 
 
 
@@ -30,6 +33,15 @@ function HomeScreen() {
       <Stack.Screen name="EditPost" options={{ title: '編輯貼文' }} component={EditPost} />
     </Stack.Navigator>
   );
+}
+
+function AccountScreen(){
+  return(
+  <Account.Navigator>
+      <Account.Screen name="帳號註冊" component={SignUp}/>
+      <Account.Screen name="帳號登入" component={SignIn}/>
+    </Account.Navigator>
+    )
 }
 
 
