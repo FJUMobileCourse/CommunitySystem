@@ -6,6 +6,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import styles from './src/styles';
+import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 
 import AccountScreen from './src/Account';
 import Home from './src/Home';
@@ -13,13 +14,23 @@ import Forum from './src/forum/Forum';
 import PostDetail from './src/forum/PostDetail';
 import EditPost from './src/forum/EditPost';
 import PackageHome from './src/package/PackageHome';
-import PackageDetail from './src/package/PackageDetail';
+import PackageNotReceived from './src/package/PackageNotReceived';
+import PackageReceived from './src/package/PackageReceived';
+
 
 const Stack = createStackNavigator();
 
 
 
-function HomeScreen() {
+function HomeScreen({ navigation, route }) {  
+  React.useLayoutEffect(() => {
+    const routeName = getFocusedRouteNameFromRoute(route);
+    if (routeName === "PackageHome"){
+        navigation.setOptions({tabBarVisible: false});
+    }else {
+        navigation.setOptions({tabBarVisible: true});
+    }
+    }, [navigation, route]);
   return (
     <Stack.Navigator>
       <Stack.Screen
@@ -31,7 +42,8 @@ function HomeScreen() {
       <Stack.Screen name="PostDetail" options={{ title: '詳細內容' }} component={PostDetail} />
       <Stack.Screen name="EditPost" options={{ title: '編輯貼文' }} component={EditPost} />
       <Stack.Screen name="PackageHome" options={{ title: '包裹領取' }} component={PackageHome} />
-      <Stack.Screen name="PackageDetail" options={{ title: '包裹詳細訊息' }} component={PostDetail} />
+      <Stack.Screen name="PackageNotReceived" options={{ title: '待領取包裹' }} component={PackageNotReceived} />
+      <Stack.Screen name="PackageReceived" options={{ title: '已包裹領取' }} component={PackageReceived} />
     </Stack.Navigator>
   );
 }

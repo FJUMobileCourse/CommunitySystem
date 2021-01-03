@@ -1,95 +1,65 @@
-import React, { useState, Component, useEffect } from 'react';
-import { FlatList, View, Text, Button, Modal } from 'react-native';
-import { Container, Content, Card, CardItem, Left, Right, Body, Icon, Thumbnail, Fab } from 'native-base';
-import styles from '../styles';
+import * as React from 'react';
+import { Text, View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import { createStackNavigator } from "@react-navigation/stack";
+import PackageNotReceived from './PackageNotReceived';
+import PackageReceived from './PackageReceived';
+  
 
-import axios from 'axios';
-import Moment from 'moment';
-import {axios_config, url} from '../Config';
+const Stack = createStackNavigator();
 
-export default function Index({ navigation }) {
-    const finalUrl = url+'Package?maxRecords=30&view=Grid%20view';
-    
-    const [posts, setPost] = useState([]);
-    const [modalVisible, setModalVisible] = useState(false);  
-
-
-    const renderItem = ({ item }) => (
-        <Card>
-            <CardItem bordered style={{backgroundColor: 'orange'}}>
-                
-                <Body>
-                    <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
-                        <Left style={{maxWidth:'20%'}}>
-                            <Text>{item.fields.PackageType}</Text>
-                        </Left>
-                        <Right>
-                        <Text>包裹狀態: {checkStatus(item.fields.PackageStatus)}</Text>
-                        
-                        
-                        </Right>
-                    </View>
-                </Body>
-    
-             </CardItem>
-             {/* 到時候導到PostDetail要隨著點擊的文不同，而導去不同的頁面 */}
-             <CardItem header bordered button onPress={() => navigation.navigate('PackageDetail')}>
-                <Body>
-                    <Text>收件人: {item.fields.ReceiveName} </Text>
-                    <Text></Text>
-                    <Text>快遞編號: {item.fields.PackageNumber}</Text>
-                    <Text></Text>
-                    <Text>送達時間: {Moment(item.fields.ReceiveTime).format('YYYY-MM-DD HH:mm')}</Text>
-                    <Text></Text>
-                    <Text>最後取件時間: {Moment(item.fields.ReturnDate).format('YYYY-MM-DD')}</Text>  
-                </Body>
-            </CardItem>
-            {/* 到時候導到PostDetail要隨著點擊的文不同，而導去不同的頁面 */}
-            <CardItem button onPress={() => navigation.navigate('PackageDetail')}>
-                <Right style={styles.comment}>
-                    <Icon active name="chatbubbles" style={{ marginRight: 5 }} />
-                </Right>
-                <Text>寄件人: {item.fields.SendName} </Text>
-                <Text></Text>
-            </CardItem>
-        </Card>
-    )
-
-    async function fetchData () {
-        const result = await axios.get(finalUrl,axios_config);
-        console.log(result);
-        setPost(result.data.records);
-    }
-
-    useEffect(() => {
-        fetchData();
-    }, [modalVisible]);
-
-    function AddFormVisibleOrNot() {
-        setModalVisible(false);
-    }
-
-   function checkStatus(num) {
-       if (num==0){
-           return "未領取";
-       }else if (num==1){
-            return "已領取"
-       }else{
-           return "異常，請聯絡管理員"
-       }
-   }
-
-
+function PackageNotReceivedScreen() {
     return (
-        <Container style={styles.container}>
-            <Content style={styles.item}>
-                <FlatList
-                    data={posts}
-                    renderItem={renderItem}
-                    keyExtractor={item => item.fields.Publisher} />
-            </Content>
-
-            
-        </Container>
+      <Stack.Navigator>
+          <Stack.Screen name="PackageNotReceived" component={PackageNotReceived} options={{headerMode: 'none', headerShown : false}} />
+      </Stack.Navigator>
     );
+  }
+  
+  function PackageReceivedScreen() {
+    return (
+    <Stack.Navigator>
+        <Stack.Screen name="PackageReceived" component={PackageReceived} options={{headerMode: 'none', headerShown : false}} />
+    </Stack.Navigator>
+    );
+  }
+
+  
+
+const Tab = createMaterialTopTabNavigator();
+
+export default function PackageHome() {
+  return (
+    
+      <Tab.Navigator
+        screenOptions={({ route }) => ({
+            tabBarIcon: ({ focused, color, size }) => {
+              let iconName;
+  
+              if (route.name === 'PackageNotReceived') {
+                iconName = focused
+                  ? 'ios-information-circle'
+                  : 'ios-information-circle-outline';
+              } else if (route.name === 'PackageReceived') {
+                iconName = focused ? 'ios-list-box' : 'ios-list';
+              }
+  
+              // You can return any component that you like here!
+              return <Ionicons name={iconName} size={size} color={color} />;
+            },
+          })}
+          tabBarOptions={{
+            activeTintColor: 'blue',
+            inactiveTintColor: 'gray',
+          }}
+        >
+      
+        <Tab.Screen name="PackageNotReceived" component={PackageNotReceivedScreen} options={{ tabBarLabel: '待領取包裹' }} />
+        <Tab.Screen name="PackageReceived" component={PackageReceivedScreen} options={{ tabBarLabel: '已領取包裹' }}/>
+      </Tab.Navigator>
+    
+  );
+  
 }
+
