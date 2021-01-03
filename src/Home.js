@@ -59,13 +59,13 @@ const styles = StyleSheet.create({
     color: '#888',
     fontSize: 18,
     marginHorizontal: 15,
-    }, 
+  },
   forbuttonsone: {
-      flex: 2,
-      flexDirection:'row',
-    },
-    forbuttonstwo: {
-      flex: 2,
-      flexDirection: 'row',
-    },
+    flex: 2,
+    flexDirection: 'row',
+  },
+  forbuttonstwo: {
+    flex: 2,
+    flexDirection: 'row',
+  },
 });
