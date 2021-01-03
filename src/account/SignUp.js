@@ -48,6 +48,11 @@ export default function SignUp() {
     }
   }
 
+  function Close(){
+    setConfrim(false);
+    navigation.navigate('帳號登入')
+  }
+
   
 
   return(
@@ -99,7 +104,7 @@ export default function SignUp() {
   <Modal transparent={true} visible={confrim}>
     <View style={style.modalView}>
       <Text>{message}</Text>
-      <Button title='前往登入' onPress={()=> navigation.navigate('帳號登入')}>
+      <Button title='前往登入' onPress={()=> Close()}>
       </Button>
     </View>
   </Modal>

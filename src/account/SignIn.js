@@ -14,7 +14,6 @@ export default function SignIn() {
     const [UserID, setID] = useState("");
     const [UserPassword, setPassword] = useState("");
     const [text, setText] = useState("");
-    const [CurrentUser, setCurrentUser] = useState([]);
 
 
     const axios_config = {
@@ -36,39 +35,31 @@ export default function SignIn() {
 
     async function Login() {
     try{
-        console.log (UserData)
         for (let index = 0; index < UserData.length; index++) {
             
             const ID = UserData[index].fields.ID;
             if(ID == UserID.toString()){
-                setCurrentUser(UserData[index].fields)
-                break; 
+                if (UserData[index].fields.Password == UserPassword){
+                    setText ('登入成功')
+                    break;
+                }
             }
-            console.log (CurrentUser)
-            console.log (ID)
+            else{
+                    setText ('帳號密碼錯誤')    
+                }
+                 
+            
         }
     }
     catch (error){
         console.log('error massage')
     }
-        
-        if (CurrentUser.Password == UserPassword){
-            setText ('登入成功')
-        }
-        else {
-            setText ('帳號密碼錯誤') 
-            
-        }
+    
    
         }
 
-    useEffect(()=>{getData()},[])
 
-    
-    
-      
-     
-       
+    useEffect(()=>{getData()},[text])   
     
 
 return(
