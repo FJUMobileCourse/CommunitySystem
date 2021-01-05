@@ -40,7 +40,7 @@ export default function Board() {
   return (
     <Container style={styles.boardContainer}>
         <FlatList 
-          data={bposts} 
+          data={bposts}
           renderItem = {renderItem}
           keyExtractor={item => item.BoardpostID}>
         </FlatList>

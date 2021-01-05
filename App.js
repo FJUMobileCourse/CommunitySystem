@@ -16,6 +16,7 @@ import Board from './src/board/Board';
 import PostDetail from './src/forum/PostDetail';
 import EditPost from './src/forum/EditPost';
 import AddPost from './src/forum/AddPost';
+import Board from './src/board/Board';
 import PackageHome from './src/package/PackageHome';
 import PackageNotReceived from './src/package/PackageNotReceived';
 import PackageReceived from './src/package/PackageReceived';
