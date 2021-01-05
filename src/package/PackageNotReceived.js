@@ -113,12 +113,12 @@ export default function PackageNotReceived() {
     return (
       
       <Container style={styles.container}>
-      <Content style={styles.item}>
-          <FlatList
+          
+          <FlatList style={styles.item}
               data={posts}
               renderItem={renderItem}
               keyExtractor={item => item.fields.Publisher} />
-      </Content>
+      
             
           </Container>
     );
