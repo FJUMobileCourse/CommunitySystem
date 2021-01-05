@@ -12,18 +12,9 @@ function reservation() {
 
 }
 
-function board() {
-
-
-}
-
-function packages() {
-
-}
-
-
 
 //主頁面home
+
 export default function Home({navigation}) {
         return (
             <View style={styles.container}>
@@ -35,7 +26,7 @@ export default function Home({navigation}) {
                     <Button onPress={() => navigation.navigate("Forum")} title="住戶討論區" />
                 </View>
                 <View style={styles.forbuttonstwo}>
-                    <Button onPress={board} title="社區佈告欄" />
+                    <Button onPress={() => navigation.navigate("Board")} title="社區佈告欄" />
                     <Button onPress={() => navigation.navigate("PackageHome")} title="包裹領取" />
                 </View>
             </View>
