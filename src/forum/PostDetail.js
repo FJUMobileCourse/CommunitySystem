@@ -184,7 +184,8 @@ export default function PostDetail({ route, navigation }) {
             {/* <KeyboardAvoidingView
                 style={{ flex: 1 }}
                 behavior="padding"> */}
-            <KeyboardAwareScrollView>
+
+            {/* <KeyboardAwareScrollView> */}
                 <SwipeListView style={styles.item}
                     ListHeaderComponent={
                         <Card>
@@ -248,7 +249,8 @@ export default function PostDetail({ route, navigation }) {
                         </ListItem>
                     }
                 />
-            </KeyboardAwareScrollView>
+            {/* </KeyboardAwareScrollView> */}
+            
             {/* </KeyboardAvoidingView> */}
         </Container>
     )
