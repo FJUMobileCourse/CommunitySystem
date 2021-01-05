@@ -25,6 +25,13 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "flex-end",
   },
+  boardContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    backgroundColor: '#fff',
+    margin: 0,
+    padding: 10,
+  },
   title: {
     fontSize: 32,
   },
