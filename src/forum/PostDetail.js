@@ -7,7 +7,7 @@ import OptionsMenu from 'react-native-option-menu';
 import { axios_config, url } from '../Config';
 import axios from 'axios';
 import Moment from 'moment';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+// import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 export default function PostDetail({ route, navigation }) {
     const MoreIcon = require('../image/more-menu.jpg');
