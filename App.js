@@ -15,6 +15,7 @@ import Forum from './src/forum/Forum';
 import PostDetail from './src/forum/PostDetail';
 import EditPost from './src/forum/EditPost';
 import AddPost from './src/forum/AddPost';
+import Board from './src/board/Board';
 import PackageHome from './src/package/PackageHome';
 import PackageNotReceived from './src/package/PackageNotReceived';
 import PackageReceived from './src/package/PackageReceived';
@@ -45,6 +46,7 @@ function HomeScreen({ navigation, route }) {
       <Stack.Screen name="PostDetail" options={{ title: '詳細內容' }} component={PostDetail} />
       <Stack.Screen name="EditPost" options={{ title: '編輯貼文' }} component={EditPost} />
       <Stack.Screen name="AddPost" options={{ title: '新增貼文' }} component={AddPost} />
+      <Stack.Screen name="Board" options={{ title: '社區佈告欄' }} component={Board} />
       <Stack.Screen name="PackageHome" options={{ title: '包裹領取' }} component={PackageHome} />
       <Stack.Screen name="PackageNotReceived" options={{ title: '待領取包裹' }} component={PackageNotReceived} />
       <Stack.Screen name="PackageReceived" options={{ title: '已包裹領取' }} component={PackageReceived} />
