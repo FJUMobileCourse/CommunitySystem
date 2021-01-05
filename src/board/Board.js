@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
 import { View, Container, Header, Content, Card, CardItem, Text, Body } from 'native-base';
+import axios from 'axios';
+import { axios_config, url } from '../Config';
+
+
 export default function Board() {
     return (
       <Container>
