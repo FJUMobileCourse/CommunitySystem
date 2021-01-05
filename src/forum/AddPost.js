@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button, TextInput, Modal, Text, Image, View, Pressable, Keyboard } from 'react-native';
+import { Button, TextInput, Modal, Text, Image, View, Pressable, Keyboard, Alert } from 'react-native';
 import { Container } from 'native-base';
 import styles from '../styles';
 import axios from 'axios';
@@ -26,6 +26,11 @@ export default function AddPost({ navigation }) {
                 PostTime: new Date(),
                 Member: ["recLmKb1fowhZ8iig"] //住戶A，要記得改!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             }
+        }
+
+        if (content == '') {
+            Alert.alert("","貼文內容不得為空！");
+            return;
         }
 
         try {

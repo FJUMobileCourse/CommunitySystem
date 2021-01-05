@@ -12,28 +12,25 @@ function reservation() {
 
 }
 
-function packages() {
-
-}
-
 
 //主頁面home
-export default function Home({ navigation }) {
-  return (
-    <View style={styles.container}>
-      <Image source={logo} style={styles.logo} />
-      <View style={{ flex: 1 }}>
-      </View>
-      <View style={styles.forbuttonsone}>
-        <Button onPress={reservation} title="公設預約" />
-        <Button onPress={() => navigation.navigate("Forum")} title="住戶討論區" />
-      </View>
-      <View style={styles.forbuttonstwo}>
-        <Button onPress={() => navigation.navigate("Board")} title="社區佈告欄" />
-        <Button onPress={packages} title="包裹領取" />
-      </View>
-    </View>
-  );
+
+export default function Home({navigation}) {
+        return (
+            <View style={styles.container}>
+                <Image source={logo} style={styles.logo} />
+                <View style={{ flex: 1 }}>
+                </View>
+                <View style={styles.forbuttonsone}>
+                    <Button onPress={reservation} title="公設預約" />
+                    <Button onPress={() => navigation.navigate("Forum")} title="住戶討論區" />
+                </View>
+                <View style={styles.forbuttonstwo}>
+                    <Button onPress={() => navigation.navigate("Board")} title="社區佈告欄" />
+                    <Button onPress={() => navigation.navigate("PackageHome")} title="包裹領取" />
+                </View>
+            </View>
+        );
 }
 
 const styles = StyleSheet.create({
