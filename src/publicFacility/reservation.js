@@ -35,12 +35,18 @@ export default function Reservation() {
              </CardItem>
              <CardItem header bordered>
                 <Body>
-                    <Text>設施資訊：{item.fields.FacilityInfo}</Text>
-                    <Text></Text>
-                    <Text>開放時間：</Text>
-                    <Text>{Moment(item.fields.OpeningTime).format('HH:mm')} - {Moment(item.fields.EndTime).format('HH:mm')}</Text>
-                    {/* <Text></Text> */}
-                    <Text></Text>
+                    <Left>
+                        <Text>設施資訊：</Text>
+                        <Text>{item.fields.FacilityInfo}</Text>
+                        <Text></Text>
+                        <Text>開放時間：</Text>
+                        <Text>{Moment(item.fields.OpeningTime).format('HH:mm')} - {Moment(item.fields.EndTime).format('HH:mm')}</Text>
+                        {/* <Text></Text> */}
+                        <Text></Text>
+                    </Left>
+                    <Right>
+                        <image ></image>
+                    </Right>
                 </Body>
             </CardItem>
         </Card>
