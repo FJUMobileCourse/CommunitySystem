@@ -1,14 +1,21 @@
-import React, {useState} from 'react';
-import {Button, View, Text, TextInput, Modal, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
+import { Button, View, Text, TextInput, Modal, StyleSheet, Image } from 'react-native';
 import styles from './SignUpStyles';
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios'
 import SignIn from './SignIn';
-
+import { axios_config, url } from '../Config';
 
 export default function SignUp() {
 
   const navigation = useNavigation();
+
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      headerBackTitleVisible: false,
+      headerBackImage: () => <Image source={require('../image/empty.png')} />,
+    });
+  }, [navigation]);
 
   const [ID, setID] = useState("");
   const [displayName, setDisplayName] = useState("");
@@ -17,17 +24,12 @@ export default function SignUp() {
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
   const [confrim, setConfrim] = useState(false);
+  const finalUrl = url + 'Member';
 
-  const axios_config = {
-    headers: {
-      'Authorization': 'Bearer keyUbBAfgTC85VHET',
-      'Content-Type': 'application/json'}
-  };
-  
-  const addMember = async() => {
+  const addMember = async () => {
     try {
-      const newPerson={
-        fields:{
+      const newPerson = {
+        fields: {
           ID: ID,
           Name: displayName,
           Phone: phone,
@@ -36,61 +38,60 @@ export default function SignUp() {
         }
       }
       console.log('newPerson', newPerson)
-      const result = await axios.post('https://api.airtable.com/v0/appueWqqS6bw4lpMD/Member',
-      newPerson, axios_config);
+      const result = await axios.post(finalUrl, newPerson, axios_config);
 
       console.log('result', result);
       setMessage('註冊成功，請前往登入');
       setConfrim(true);
     }
-    catch (e){
-      console.log("error:"+ e);
+    catch (e) {
+      console.log("error:" + e);
     }
   }
 
-  function Close(){
+  function Close() {
     setConfrim(false);
-    navigation.navigate('帳號登入')
+    navigation.navigate('SignIn')
   }
 
-  
 
-  return(
+
+  return (
     <View style={styles.form}>
 
       <TextInput
         style={styles.inputStyle}
         placeholder="使用者帳號"
         value={ID}
-        onChangeText={text=>setID(text)}
-      /> 
+        onChangeText={text => setID(text)}
+      />
 
       <TextInput
         style={styles.inputStyle}
         placeholder="姓名"
         value={displayName}
-        onChangeText={text=>setDisplayName(text)}
-      /> 
-           
+        onChangeText={text => setDisplayName(text)}
+      />
+
       <TextInput
         style={styles.inputStyle}
         placeholder="電子信箱"
         value={email}
-        onChangeText={text=>setEmail(text)}
+        onChangeText={text => setEmail(text)}
       />
 
       <TextInput
         style={styles.inputStyle}
         placeholder="手機號碼"
         value={phone}
-        onChangeText={text=>setPhone(text)}
+        onChangeText={text => setPhone(text)}
       />
 
       <TextInput
         style={styles.inputStyle}
         placeholder="密碼"
         value={password}
-        onChangeText={text=>setPassword(text)}
+        onChangeText={text => setPassword(text)}
         maxLength={15}
         secureTextEntry={true}
       />
@@ -100,37 +101,37 @@ export default function SignUp() {
         title="註冊"
       />
 
-  
-  <Modal transparent={true} visible={confrim}>
-    <View style={style.modalView}>
-      <Text>{message}</Text>
-      <Button title='前往登入' onPress={()=> Close()}>
-      </Button>
-    </View>
-  </Modal>
-  
-  
 
-      <Button onPress={()=> navigation.navigate('帳號登入')} title='已經註冊，我要登入'></Button>
+      <Modal transparent={true} visible={confrim}>
+        <View style={style.modalView}>
+          <Text>{message}</Text>
+          <Button title='前往登入' onPress={() => Close()}>
+          </Button>
+        </View>
+      </Modal>
+
+
+
+      <Button onPress={() => navigation.goBack()} title='已經註冊，我要登入'></Button>
     </View>
   )
 }
 
 const style = StyleSheet.create({
   modalView: {
-  margin: 60,
-  marginTop: "100%",
-  backgroundColor: "white",
-  borderRadius: 20,
-  padding: 20,
-  alignItems: "center",
-  shadowColor: "#000",
-  shadowOffset: {
-    width: 0,
-    height: 2
-  },
-  shadowOpacity: 0.25,
-  shadowRadius: 3.84,
-  elevation: 5
+    margin: 60,
+    marginTop: "100%",
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 20,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5
   }
 })

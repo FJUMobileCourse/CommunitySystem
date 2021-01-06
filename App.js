@@ -1,13 +1,9 @@
-import { StatusBar } from 'expo-status-bar';
-import * as React from "react";
-import { Text, View, Image, Button } from "react-native";
+import React from "react";
 import { Ionicons } from '@expo/vector-icons';
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import styles from './src/styles';
 import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
-
 import SignUp from './src/account/SignUp';
 import SignIn from './src/account/SignIn';
 import Home from './src/Home';
@@ -25,20 +21,20 @@ import PackageHome from './src/package/PackageHome';
 import PackageNotReceived from './src/package/PackageNotReceived';
 import PackageReceived from './src/package/PackageReceived';
 
+export default function App() {
+  const Stack = createStackNavigator();
+  const Account = createStackNavigator();
+  const defaultScreen = createStackNavigator();
+  const Tab = createBottomTabNavigator();
 
-const Stack = createStackNavigator();
-const Account = createStackNavigator();
-
-
-
-function HomeScreen({ navigation, route }) {  
-  React.useLayoutEffect(() => {
-    const routeName = getFocusedRouteNameFromRoute(route);
-    if (routeName === "PackageHome"){
-        navigation.setOptions({tabBarVisible: false});
-    }else {
-        navigation.setOptions({tabBarVisible: true});
-    }
+  function HomeScreen({ navigation, route }) {
+    React.useLayoutEffect(() => {
+      const routeName = getFocusedRouteNameFromRoute(route);
+      if (routeName === "PackageHome") {
+        navigation.setOptions({ tabBarVisible: false });
+      } else {
+        navigation.setOptions({ tabBarVisible: true });
+      }
     }, [navigation, route]);
   return (
     <Stack.Navigator>
@@ -64,39 +60,17 @@ function HomeScreen({ navigation, route }) {
   );
 }
 
-function AccountScreen(){
-  return(
-  <Account.Navigator>
-      <Account.Screen name="帳號註冊" component={SignUp}/>
-      <Account.Screen name="帳號登入" component={SignIn}/>
-    </Account.Navigator>
-    )
-}
 
+  function AccountScreen() {
 
-const Tab = createBottomTabNavigator();
+  }
 
-/*function App() {
-  return (
-    <NavigationContainer>
-      <Tab.Navigator>
-        <Tab.Screen name="Home" component={HomeScreen} />
-        <Tab.Screen name="Account" component={AccountScreen} />
-      </Tab.Navigator>
-    </NavigationContainer>
-  );
-}
-*/
-
-export default function App(){
-//function App() {
-  return (
-    <NavigationContainer>
+  function AfterSignIn(props) {
+    return (
       <Tab.Navigator
         screenOptions={({ route }) => ({
           tabBarIcon: ({ focused, color, size }) => {
             let iconName;
-
             if (route.name === '首頁') {
               iconName = focused ? 'ios-home' : 'ios-home';
             } else if (route.name === '會員中心') {
@@ -112,9 +86,19 @@ export default function App(){
           inactiveTintColor: 'gray',
         }}
       >
-        <Tab.Screen name="首頁" component={HomeScreen} />
+        <Tab.Screen name="首頁" component={HomeScreen} initialParams={{ id: props.route.params.userID }} />
         <Tab.Screen name="會員中心" component={AccountScreen} />
       </Tab.Navigator>
+    )
+  }
+
+  return (
+    <NavigationContainer>
+      <defaultScreen.Navigator>
+        <defaultScreen.Screen name="SignIn" component={SignIn} options={{ title: '登入' }} />
+        <defaultScreen.Screen name="SignUp" component={SignUp} options={{ title: '註冊' }} />
+        <defaultScreen.Screen name="AfterSignIn" component={AfterSignIn} options={{ headerMode: 'none', headerShown: false }} />
+      </defaultScreen.Navigator>
     </NavigationContainer>
   );
 }

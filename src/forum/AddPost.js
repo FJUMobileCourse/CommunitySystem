@@ -5,7 +5,7 @@ import styles from '../styles';
 import axios from 'axios';
 import { axios_config, url } from '../Config';
 
-export default function AddPost({ navigation }) {
+export default function AddPost({ navigation, route }) {
     const finalUrl = url + 'Forum?maxRecords=30&view=Grid%20view';
     const [content, setContent] = useState("");
 
@@ -24,7 +24,7 @@ export default function AddPost({ navigation }) {
             fields: {
                 PostContent: content,
                 PostTime: new Date(),
-                Member: ["recLmKb1fowhZ8iig"] //住戶A，要記得改!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                Member: [route.params.userID]
             }
         }
 
