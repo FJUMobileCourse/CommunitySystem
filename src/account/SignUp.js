@@ -1,16 +1,22 @@
 import React, { useState } from 'react';
-import { Button, View, Text, TextInput, Modal, StyleSheet, Alert, Pressable, Keyboard, Image } from 'react-native';
+import { Button, View, Text, TextInput, Modal, StyleSheet, Image, Pressable, Keyboard } from 'react-native';
 import styles from './SignUpStyles';
 import { useNavigation } from '@react-navigation/native';
-import axios from 'axios';
+import axios from 'axios'
+import SignIn from './SignIn';
+import { axios_config, url } from '../Config';
 import { Container } from 'native-base';
-import * as ImagePicker from 'expo-image-picker';
-
-
 
 export default function SignUp() {
 
   const navigation = useNavigation();
+
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      headerBackTitleVisible: false,
+      headerBackImage: () => <Image source={require('../image/empty.png')} />,
+    });
+  }, [navigation]);
 
   const [ID, setID] = useState("");
   const [displayName, setDisplayName] = useState("");
@@ -19,14 +25,7 @@ export default function SignUp() {
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
   const [confrim, setConfrim] = useState(false);
-
-  const axios_config = {
-    headers: {
-      'Authorization': 'Bearer keyUbBAfgTC85VHET',
-      'Content-Type': 'application/json'
-    }
-  };
-
+  const finalUrl = url + 'Member';
 
   const addMember = async () => {
     try {
@@ -38,15 +37,9 @@ export default function SignUp() {
           Email: email,
           Password: password
         }
-
-      }
-      if (ID || displayName || phone || email || password == '') {
-        setMessage('必填欄位不能為空');
-        return;
       }
       console.log('newPerson', newPerson)
-      const result = await axios.post('https://api.airtable.com/v0/appueWqqS6bw4lpMD/Member',
-        newPerson, axios_config);
+      const result = await axios.post(finalUrl, newPerson, axios_config);
 
       console.log('result', result);
       setMessage('註冊成功，請前往登入');
@@ -59,7 +52,7 @@ export default function SignUp() {
 
   function Close() {
     setConfrim(false);
-    navigation.navigate('帳號登入')
+    navigation.navigate('SignIn')
   }
 
 
@@ -68,37 +61,38 @@ export default function SignUp() {
     <Container>
       <View style={styles.form}>
         <Pressable onPress={Keyboard.dismiss}>
+
           <TextInput
             style={styles.inputStyle}
-            placeholder="使用者帳號(必填)"
+            placeholder="使用者帳號"
             value={ID}
             onChangeText={text => setID(text)}
           />
 
           <TextInput
             style={styles.inputStyle}
-            placeholder="姓名(必填)"
+            placeholder="姓名"
             value={displayName}
             onChangeText={text => setDisplayName(text)}
           />
 
           <TextInput
             style={styles.inputStyle}
-            placeholder="電子信箱(必填)"
+            placeholder="電子信箱"
             value={email}
             onChangeText={text => setEmail(text)}
           />
 
           <TextInput
             style={styles.inputStyle}
-            placeholder="手機號碼(必填)"
+            placeholder="手機號碼"
             value={phone}
             onChangeText={text => setPhone(text)}
           />
 
           <TextInput
             style={styles.inputStyle}
-            placeholder="密碼(必填)"
+            placeholder="密碼"
             value={password}
             onChangeText={text => setPassword(text)}
             maxLength={15}
@@ -110,6 +104,7 @@ export default function SignUp() {
             title="註冊"
           />
 
+
           <Modal transparent={true} visible={confrim}>
             <View style={style.modalView}>
               <Text>{message}</Text>
@@ -118,13 +113,14 @@ export default function SignUp() {
             </View>
           </Modal>
 
-          <Button onPress={() => navigation.navigate('帳號登入')} title='已經註冊，我要登入'></Button>
+
+
+          <Button onPress={() => navigation.goBack()} title='已經註冊，我要登入'></Button>
         </Pressable>
       </View>
-    </Container >
+    </Container>
   )
 }
-
 
 const style = StyleSheet.create({
   modalView: {
