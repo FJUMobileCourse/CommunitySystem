@@ -1,16 +1,6 @@
-import React, { Component, useEffect } from 'react';
-import { Image, StyleSheet, Text, View, Button } from "react-native";
-import { useNavigation } from '@react-navigation/native';
+import React from 'react';
+import { Image, StyleSheet, View, Button } from "react-native";
 import logo from '../assets/community.png';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-
-
-const Stack = createStackNavigator();
-
-function reservation() {
-
-}
 
 
 //主頁面home
@@ -29,7 +19,7 @@ export default function Home({ navigation }) {
       <View style={{ flex: 1 }}>
       </View>
       <View style={styles.forbuttonsone}>
-        <Button onPress={reservation} title="公設預約" />
+        <Button onPress={() => navigation.navigate("ReservationHome")} title="公設預約" />
         <Button onPress={() => navigation.navigate("Forum")} title="住戶討論區" />
       </View>
       <View style={styles.forbuttonstwo}>
