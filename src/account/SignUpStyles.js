@@ -7,12 +7,14 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
       marginTop: StatusBar.currentHeight || 0,
     },
+    
     loading:{
       flex:1,
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'center',
     },
+
     item: {
       flex: 1,
       flexDirection: 'row',
@@ -21,9 +23,11 @@ const styles = StyleSheet.create({
       marginVertical: 8,
       marginHorizontal: 16,
     },
+
     title: {
       fontSize: 24,
     },
+
     form: {
       flex: 1,
       flexDirection: 'column',
@@ -31,6 +35,7 @@ const styles = StyleSheet.create({
       padding: 35,
       marginTop: StatusBar.currentHeight || 0,
     },
+
     inputStyle: {
       width: '100%',
       marginBottom: 15,
@@ -38,6 +43,12 @@ const styles = StyleSheet.create({
       alignSelf: "center",
       borderColor: "#ccc",
       borderBottomWidth: 1
+    },
+
+    logo: {
+      width: 305,
+      height: 159,
+      marginBottom: 20,
     },
   
   });

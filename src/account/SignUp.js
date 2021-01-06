@@ -1,9 +1,11 @@
-import React, {useState} from 'react';
-import {Button, View, Text, TextInput, Modal, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
+import { Button, View, Text, TextInput, Modal, StyleSheet, Alert, Pressable, Keyboard, Image } from 'react-native';
 import styles from './SignUpStyles';
 import { useNavigation } from '@react-navigation/native';
-import axios from 'axios'
-import SignIn from './SignIn';
+import axios from 'axios';
+import { Container } from 'native-base';
+import * as ImagePicker from 'expo-image-picker';
+
 
 
 export default function SignUp() {
@@ -21,116 +23,125 @@ export default function SignUp() {
   const axios_config = {
     headers: {
       'Authorization': 'Bearer keyUbBAfgTC85VHET',
-      'Content-Type': 'application/json'}
+      'Content-Type': 'application/json'
+    }
   };
-  
-  const addMember = async() => {
+
+
+  const addMember = async () => {
     try {
-      const newPerson={
-        fields:{
+      const newPerson = {
+        fields: {
           ID: ID,
           Name: displayName,
           Phone: phone,
           Email: email,
           Password: password
         }
+
+      }
+      if (ID || displayName || phone || email || password == '') {
+        setMessage('必填欄位不能為空');
+        return;
       }
       console.log('newPerson', newPerson)
       const result = await axios.post('https://api.airtable.com/v0/appueWqqS6bw4lpMD/Member',
-      newPerson, axios_config);
+        newPerson, axios_config);
 
       console.log('result', result);
       setMessage('註冊成功，請前往登入');
       setConfrim(true);
     }
-    catch (e){
-      console.log("error:"+ e);
+    catch (e) {
+      console.log("error:" + e);
     }
   }
 
-  function Close(){
+  function Close() {
     setConfrim(false);
     navigation.navigate('帳號登入')
   }
 
-  
 
-  return(
-    <View style={styles.form}>
 
-      <TextInput
-        style={styles.inputStyle}
-        placeholder="使用者帳號"
-        value={ID}
-        onChangeText={text=>setID(text)}
-      /> 
+  return (
+    <Container>
+      <View style={styles.form}>
+        <Pressable onPress={Keyboard.dismiss}>
+          <TextInput
+            style={styles.inputStyle}
+            placeholder="使用者帳號(必填)"
+            value={ID}
+            onChangeText={text => setID(text)}
+          />
 
-      <TextInput
-        style={styles.inputStyle}
-        placeholder="姓名"
-        value={displayName}
-        onChangeText={text=>setDisplayName(text)}
-      /> 
-           
-      <TextInput
-        style={styles.inputStyle}
-        placeholder="電子信箱"
-        value={email}
-        onChangeText={text=>setEmail(text)}
-      />
+          <TextInput
+            style={styles.inputStyle}
+            placeholder="姓名(必填)"
+            value={displayName}
+            onChangeText={text => setDisplayName(text)}
+          />
 
-      <TextInput
-        style={styles.inputStyle}
-        placeholder="手機號碼"
-        value={phone}
-        onChangeText={text=>setPhone(text)}
-      />
+          <TextInput
+            style={styles.inputStyle}
+            placeholder="電子信箱(必填)"
+            value={email}
+            onChangeText={text => setEmail(text)}
+          />
 
-      <TextInput
-        style={styles.inputStyle}
-        placeholder="密碼"
-        value={password}
-        onChangeText={text=>setPassword(text)}
-        maxLength={15}
-        secureTextEntry={true}
-      />
+          <TextInput
+            style={styles.inputStyle}
+            placeholder="手機號碼(必填)"
+            value={phone}
+            onChangeText={text => setPhone(text)}
+          />
 
-      <Button
-        onPress={addMember}
-        title="註冊"
-      />
+          <TextInput
+            style={styles.inputStyle}
+            placeholder="密碼(必填)"
+            value={password}
+            onChangeText={text => setPassword(text)}
+            maxLength={15}
+            secureTextEntry={true}
+          />
 
-  
-  <Modal transparent={true} visible={confrim}>
-    <View style={style.modalView}>
-      <Text>{message}</Text>
-      <Button title='前往登入' onPress={()=> Close()}>
-      </Button>
-    </View>
-  </Modal>
-  
-  
+          <Button
+            onPress={addMember}
+            title="註冊"
+          />
 
-      <Button onPress={()=> navigation.navigate('帳號登入')} title='已經註冊，我要登入'></Button>
-    </View>
+
+          <Modal transparent={true} visible={confrim}>
+            <View style={style.modalView}>
+              <Text>{message}</Text>
+              <Button title='前往登入' onPress={() => Close()}>
+              </Button>
+            </View>
+          </Modal>
+
+          <Button onPress={() => navigation.navigate('帳號登入')} title='已經註冊，我要登入'></Button>
+        </Pressable>
+      </View>
+    </Container >
   )
 }
 
+
 const style = StyleSheet.create({
   modalView: {
-  margin: 60,
-  marginTop: "100%",
-  backgroundColor: "white",
-  borderRadius: 20,
-  padding: 20,
-  alignItems: "center",
-  shadowColor: "#000",
-  shadowOffset: {
-    width: 0,
-    height: 2
-  },
-  shadowOpacity: 0.25,
-  shadowRadius: 3.84,
-  elevation: 5
+    margin: 60,
+    marginTop: "100%",
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 20,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5
   }
 })

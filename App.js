@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import * as React from "react";
-import { Text, View, Image, Button } from "react-native";
+import { Text, View, Image, Button, ImagePickerIOS } from "react-native";
 import { Ionicons } from '@expo/vector-icons';
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -60,6 +60,7 @@ function AccountScreen(){
     </Account.Navigator>
     )
 }
+
 
 
 const Tab = createBottomTabNavigator();
