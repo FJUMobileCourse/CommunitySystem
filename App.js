@@ -18,6 +18,8 @@ import EditPost from './src/forum/EditPost';
 import AddPost from './src/forum/AddPost';
 import ReservationHome from './src/publicFacility/ReservationHome';
 import Reservation from './src/publicFacility/Reservation';
+import ReservationInfo from './src/publicFacility/ReservationInfo';
+import ReservationCheck from './src/publicFacility/ReservationCheck';
 import ReservationRecord from './src/publicFacility/ReservationRecord';
 import PackageHome from './src/package/PackageHome';
 import PackageNotReceived from './src/package/PackageNotReceived';
@@ -52,6 +54,8 @@ function HomeScreen({ navigation, route }) {
       <Stack.Screen name="Board" options={{ title: '社區佈告欄' }} component={Board} />
       <Stack.Screen name="ReservationHome" options={{ title: '公設預約' }} component={ReservationHome} />
       <Stack.Screen name="Reservation" options={{ title: '預約公設' }} component={Reservation} />
+      <Stack.Screen name="ReservationInfo" options={{ title: '公設資訊' }} component={ReservationInfo} />
+      <Stack.Screen name="ReservationCheck" options={{ title: '確定預約' }} component={ReservationCheck} />
       <Stack.Screen name="ReservationRecord" options={{ title: '預約紀錄' }} component={ReservationRecord} />
       <Stack.Screen name="PackageHome" options={{ title: '包裹領取' }} component={PackageHome} />
       <Stack.Screen name="PackageNotReceived" options={{ title: '待領取包裹' }} component={PackageNotReceived} />
