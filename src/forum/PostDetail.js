@@ -7,7 +7,7 @@ import OptionsMenu from 'react-native-option-menu';
 import { axios_config, url } from '../Config';
 import axios from 'axios';
 import Moment from 'moment';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+// import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 export default function PostDetail({ route, navigation }) {
     const MoreIcon = require('../image/more-menu.jpg');
@@ -156,9 +156,15 @@ export default function PostDetail({ route, navigation }) {
                 Content: addContent,
                 CommentTime: new Date(),
                 Forum: [posts.id],
-                Member: ["recLmKb1fowhZ8iig"] //住戶A，要記得改!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                Member: [route.params.userID]
             }
         }
+
+        if (addContent == ''){
+            Alert.alert("","留言內容不得為空！");
+            return;
+        }
+
         try {
             await axios.post(finalUrl, newComment, axios_config);
             setAddContent('');
@@ -184,7 +190,8 @@ export default function PostDetail({ route, navigation }) {
             {/* <KeyboardAvoidingView
                 style={{ flex: 1 }}
                 behavior="padding"> */}
-            <KeyboardAwareScrollView>
+
+            {/* <KeyboardAwareScrollView> */}
                 <SwipeListView style={styles.item}
                     ListHeaderComponent={
                         <Card>
@@ -248,7 +255,8 @@ export default function PostDetail({ route, navigation }) {
                         </ListItem>
                     }
                 />
-            </KeyboardAwareScrollView>
+            {/* </KeyboardAwareScrollView> */}
+            
             {/* </KeyboardAvoidingView> */}
         </Container>
     )

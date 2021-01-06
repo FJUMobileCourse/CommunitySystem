@@ -25,15 +25,15 @@ const Account = createStackNavigator();
 
 
 
-function HomeScreen({ navigation, route }) {  
+function HomeScreen({ navigation, route }) {
   React.useLayoutEffect(() => {
     const routeName = getFocusedRouteNameFromRoute(route);
-    if (routeName === "PackageHome"){
-        navigation.setOptions({tabBarVisible: false});
-    }else {
-        navigation.setOptions({tabBarVisible: true});
+    if (routeName === "PackageHome") {
+      navigation.setOptions({ tabBarVisible: false });
+    } else {
+      navigation.setOptions({ tabBarVisible: true });
     }
-    }, [navigation, route]);
+  }, [navigation, route]);
   return (
     <Stack.Navigator>
       <Stack.Screen
@@ -52,13 +52,13 @@ function HomeScreen({ navigation, route }) {
   );
 }
 
-function AccountScreen(){
-  return(
-  <Account.Navigator>
-      <Account.Screen name="帳號註冊" component={SignUp}/>
-      <Account.Screen name="帳號登入" component={SignIn}/>
+function AccountScreen() {
+  return (
+    <Account.Navigator>
+      <Account.Screen name="帳號註冊" component={SignUp} />
+      <Account.Screen name="帳號登入" component={SignIn} />
     </Account.Navigator>
-    )
+  )
 }
 
 
@@ -77,8 +77,8 @@ const Tab = createBottomTabNavigator();
 }
 */
 
-export default function App(){
-//function App() {
+export default function App() {
+  //function App() {
   return (
     <NavigationContainer>
       <Tab.Navigator

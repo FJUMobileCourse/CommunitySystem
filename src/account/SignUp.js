@@ -110,7 +110,6 @@ export default function SignUp() {
             title="註冊"
           />
 
-
           <Modal transparent={true} visible={confrim}>
             <View style={style.modalView}>
               <Text>{message}</Text>
