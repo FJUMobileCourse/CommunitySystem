@@ -18,13 +18,15 @@ import Moment from 'moment';
 import { axios_config, url } from '../Config';
 
 export default function PackageReceived(route) {
-    const finalUrl = url + 'tbl1OVTLhLIvUk3iZ?filterByFormula=AND(PackageStatus%3D1%2CMemberID%3D' + '2' + ')&maxRecords=30&sort%5B0%5D%5Bfield%5D=PackageStatus&sort%5B0%5D%5Bdirection%5D=desc';
+    //辨別登入者身份
+    var loginID = '22';
 
-    const [posts, setPost] = useState([]);
+    const finalUrl = url + 'tbl1OVTLhLIvUk3iZ?filterByFormula=AND(PackageStatus%3D1%2CMemberID%3D' + loginID + ')&maxRecords=30&sort%5B0%5D%5Bfield%5D=PackageStatus&sort%5B0%5D%5Bdirection%5D=desc';
+
+    const [packageData, setPackageData] = useState([]);
     const [modalVisible, setModalVisible] = useState(false);
     const [changeVisible, setChangeVisible] = useState(false);
-    //辨別登入者身份
-    //const loginID = {fields: {Member: [route.params.userID]}}
+    
     const renderItem = ({ item }) => (
         <Card>
             <CardItem bordered>
@@ -69,16 +71,13 @@ export default function PackageReceived(route) {
     async function fetchData() {
         const result = await axios.get(finalUrl, axios_config);
         console.log(result);
-        setPost(result.data.records);
+        setPackageData(result.data.records);
     }
 
     useEffect(() => {
         fetchData();
     }, [modalVisible]);
 
-    function AddFormVisibleOrNot() {
-        setModalVisible(false);
-    }
 
     function checkStatusButton(num) {
         if (num == 0) {
@@ -107,7 +106,7 @@ export default function PackageReceived(route) {
         <Container style={styles.packagecontainer}>
 
             <FlatList style={styles.item}
-                data={posts}
+                data={packageData}
                 renderItem={renderItem}
                 />
 
