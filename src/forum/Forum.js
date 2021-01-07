@@ -10,7 +10,6 @@ import { axios_config, url } from '../Config';
 export default function Index({ navigation }) {
     const finalUrl = url + 'Forum?maxRecords=30&view=Grid%20view';
     const [posts, setPost] = useState([]);
-    const [selectedId, setSelectedId] = useState(null);
 
     //只要到佈告欄頁面就重新render頁面
     React.useEffect(() => {
