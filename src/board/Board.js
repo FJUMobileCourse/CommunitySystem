@@ -42,7 +42,7 @@ export default function Board() {
         <FlatList 
           data={bposts}
           renderItem = {renderItem}
-          keyExtractor={item => item.BoardpostID}>
+          keyExtractor={item => item.fields.BoardpostID.toString()}>
         </FlatList>
     </Container>
   );
