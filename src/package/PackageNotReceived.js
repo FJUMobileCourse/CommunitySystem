@@ -1,4 +1,4 @@
- import Icon from 'react-native-vector-icons/Ionicons';  
+import Icon from 'react-native-vector-icons/Ionicons';  
 import React, { useState, Component, useEffect } from 'react';
 import { FlatList, View, Text, Button} from 'react-native';
 import { Container, Content, Card, CardItem, Left, Right, Body, Thumbnail, Fab } from 'native-base';
@@ -16,28 +16,28 @@ import Modal, {
 import axios from 'axios';
 import Moment from 'moment';
 import {axios_config, url} from '../Config';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
-export default function PackageNotReceived() {
-    const finalUrl = url+'Package?maxRecords=30&view=Grid%20view';
+export default function PackageNotReceived(route) {
+    const finalUrl = url+'tbl1OVTLhLIvUk3iZ?filterByFormula=AND(PackageStatus%3D0%2CMemberID%3D' + '2' + ')&maxRecords=30&sort%5B0%5D%5Bfield%5D=PackageStatus&sort%5B0%5D%5Bdirection%5D=desc';
     
     const [posts, setPost] = useState([]);
     const [modalVisible, setModalVisible] = useState(false);  
     const [changeVisible, setChangeVisible] = useState(false);
-
+    //辨別登入者身份
+    //const loginID = {fields: {Member: [route.params.userID]}}
     const renderItem = ({ item }) => (
         <Card>
-            <CardItem bordered style={{backgroundColor: changeStatusColor(item.fields.PackageStatus)}}>
+            <CardItem bordered>
                 
                 <Body>
                     <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
                         <Left style={{maxWidth:'20%'}}>
-                            <Text>{item.fields.PackageType}</Text>
+                            <Text style={{fontWeight: "bold"}}>{item.fields.PackageType}</Text>
                         </Left>
                         <Right>
-                        <Text>包裹狀態: {checkStatus(item.fields.PackageStatus)}</Text>
-                        
-                        
+                            <View  backgroundColor={changeStatusColor(item.fields.PackageStatus)} style={{flex: 1, borderRadius: 5}}>
+                        <Button title={checkStatusButton(item.fields.PackageStatus)} color='white'></Button>
+                            </View>
                         </Right>
                     </View>
                 </Body>
@@ -56,13 +56,12 @@ export default function PackageNotReceived() {
                 </Body>
             </CardItem>
             
-            <CardItem button onPress={() => setChangeVisible(true)}>
-
-                <Right style={styles.comment}>
-                    <Icon active name="paper" style={{ marginRight: 5 }} />
+            <CardItem>
+                <Right style={styles.textRight}>
+                    <Text>寄件人: {item.fields.SendName} </Text>
+                    <Text></Text>
+                    <Text>寄件地址: {item.fields.SendAddress}</Text>
                 </Right>
-                <Text>寄件人: {item.fields.SendName} </Text>
-                <Text></Text>
             </CardItem>
         </Card>
     )
@@ -81,15 +80,13 @@ export default function PackageNotReceived() {
         setModalVisible(false);
     }
 
-   function checkStatus(num) {
+   function checkStatusButton(num) {
        if (num==0){
            return "未領取";
        }else if (num==1){
-            return "已領取"
-       }else{
-           return "異常，請聯絡管理員"
-       }
+            return "已領取";
    }
+}
 
    function changeStatusColor(status){
      let color;
@@ -104,20 +101,15 @@ export default function PackageNotReceived() {
      
    }
 
-   function checkIdentify(){
-       
-   }
-   
-  
 
     return (
       
-      <Container style={styles.container}>
+      <Container style={styles.packagecontainer}>
           
           <FlatList style={styles.item}
               data={posts}
               renderItem={renderItem}
-              keyExtractor={item => item.fields.Publisher} />
+              />
       
             
           </Container>
