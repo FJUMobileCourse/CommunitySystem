@@ -1,18 +1,9 @@
 import Icon from 'react-native-vector-icons/Ionicons';  
 import React, { useState, Component, useEffect } from 'react';
-import { FlatList, View, Text, Button , Image} from 'react-native';
+import { FlatList, View, Text , Image} from 'react-native';
+import { Button } from 'react-native-elements';
 import { Container, Content, Card, CardItem, Left, Right, Body, Thumbnail, Fab } from 'native-base';
 import styles from '../styles';
-import Modal, {
-  ModalTitle,
-  ModalContent,
-  ModalFooter,
-  ModalButton,
-  SlideAnimation,
-  ScaleAnimation,
-  BottomModal,
-  ModalPortal,
-} from 'react-native-modals';
 import axios from 'axios';
 import Moment from 'moment';
 import {axios_config, url} from '../Config';
@@ -59,13 +50,17 @@ export default function Reservation({ navigation }) {
                         <Text>{Moment(item.fields.OpeningTime).format("LT")} - {Moment(item.fields.EndTime).format('LT')}</Text>
                     </Left>
                     <Right>
+                        <Text/>
                         <Button 
                             style={{
                                 flex: 1 ,
                                 // flexDirection: 'row',
                                 justifyContent: 'center',
-                                alignItems: 'center'
+                                alignItems: 'center',
+                                backgroundColor: 'black' , 
+                                borderRadius: 5
                             }}
+                            type="outline"
                             title="前往預約"
                             onPress={() => GoToReservationInfo(item.FacilityID)}
                         />
@@ -79,7 +74,6 @@ export default function Reservation({ navigation }) {
         const result = await axios.get(finalUrl , axios_config);
         console.log(result.data);
         setPost(result.data.records);
-        console.log(result.data.OpeningTime.toTimeString())
     }
 
     useEffect(() => {
