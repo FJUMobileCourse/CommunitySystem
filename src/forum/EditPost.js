@@ -36,7 +36,7 @@ export default function EditPost({ route, navigation }) {
         }
 
         if (content == '') {
-            Alert.alert("","貼文內容不得為空！");
+            Alert.alert("", "貼文內容不得為空！");
             return;
         }
 
