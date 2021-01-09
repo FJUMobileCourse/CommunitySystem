@@ -1,18 +1,23 @@
 import Icon from 'react-native-vector-icons/Ionicons';  
 import React, { useState, Component, useEffect } from 'react';
-import { FlatList, View, Text , Image} from 'react-native';
-import { Button } from 'react-native-elements';
+import { FlatList, View, Text , Image ,  Button} from 'react-native';
 import { Container, Content, Card, CardItem, Left, Right, Body, Thumbnail, Fab } from 'native-base';
 import styles from '../styles';
+import moment from 'moment';
 import axios from 'axios';
-import Moment from 'moment';
 import {axios_config, url} from '../Config';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function Reservation({ navigation }) {
     const finalUrl = url+'facility?maxRecords=30&view=Grid%20view';
     
-    const [posts, setPost] = useState([]);
+    const [data, setData] = useState([]);
+    const [currentTime , setCurrentTime] = useState('');
+    useEffect(() => {
+        var Time = moment()
+                    .utcOffset('+08:00')
+                    .format('hh:mm');
+        setCurrentTime(Time);
+    }, []);
 
     const renderItem = ({ item }) => (
         <Card>
@@ -33,10 +38,18 @@ export default function Reservation({ navigation }) {
                                 }}
                             />
                             <Text></Text>
-                            <Text>
-                                設施狀態：
-                                <Text style={{color: "#01814A"}}>開放中</Text>
-                            </Text>
+                            {currentTime < item.fields.OpeningTime && currentTime > item.fields.EndTime
+                                ?
+                                <Text>
+                                    設施狀態：
+                                    <Text style={{color: "#FF0000"}}>關閉中</Text>
+                                </Text>
+                                :
+                                <Text>
+                                    設施狀態：
+                                    <Text style={{color: "#01814A"}}>開放中</Text>
+                                </Text>
+                            }
                         </Right>
                     </View>
                 </Body>
@@ -47,7 +60,7 @@ export default function Reservation({ navigation }) {
                         <Text>設施資訊：</Text>
                         <Text>{item.fields.FacilityInfo}</Text>
                         <Text>開放時間：</Text>
-                        <Text>{Moment(item.fields.OpeningTime).format("LT")} - {Moment(item.fields.EndTime).format('LT')}</Text>
+                        <Text>{item.fields.OpeningTime} - {item.fields.EndTime}</Text>
                     </Left>
                     <Right>
                         <Text/>
@@ -73,7 +86,7 @@ export default function Reservation({ navigation }) {
     async function fetchData () {
         const result = await axios.get(finalUrl , axios_config);
         console.log(result.data);
-        setPost(result.data.records);
+        setData(result.data.records);
     }
 
     useEffect(() => {
@@ -82,7 +95,7 @@ export default function Reservation({ navigation }) {
 
 
     function GoToReservationInfo(id) {
-        navigation.navigate('ReservationInfo', { itemId: id });
+        navigation.navigate('ReservationInfo', { FacilityID: id });
     }
 //    function checkTime() {
 //        if (num==0){
@@ -99,7 +112,7 @@ export default function Reservation({ navigation }) {
         <Container style={styles.container}>
             <Content style={styles.item}>
                 <FlatList
-                    data={posts}
+                    data={data}
                     renderItem={renderItem}
                     // keyExtractor={item => item.fields.Publisher}
                 />

@@ -4,9 +4,7 @@ import { FlatList, View, Text, Button , Image} from 'react-native';
 import { Container, Content, Card, CardItem, Left, Right, Body, Thumbnail, Fab } from 'native-base';
 import styles from '../styles';
 import axios from 'axios';
-import Moment from 'moment';
 import {axios_config, url} from '../Config';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function ReservationCheck() {
     const finalUrl = url+'facility?maxRecords=30&view=Grid%20view';

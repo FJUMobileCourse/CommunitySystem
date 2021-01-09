@@ -1,17 +1,18 @@
 import Icon from 'react-native-vector-icons/Ionicons';  
 import React, { useState, Component, useEffect } from 'react';
-import { FlatList, View, Text, Button , Image} from 'react-native';
-import { Container, Content, Card, CardItem, Left, Right, Body, Thumbnail, Fab } from 'native-base';
+import { FlatList , View , Text , Button , Image} from 'react-native';
+import { Container, Content, Card, CardItem, Left, Right, Body, Thumbnail, Fab, Textarea } from 'native-base';
 import styles from '../styles';
 import axios from 'axios';
-import Moment from 'moment';
 import {axios_config, url} from '../Config';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function ReservationInfo({ navigation }) {
-    const finalUrl = url+'facility?maxRecords=30&view=Grid%20view';
+    var facilityID = '' ;
+    const finalUrl = url + 'facility?' + facilityID + 'maxRecords=30&view=Grid%20view';
+    var getInfoUrl = url + 'facility/' + route.params.FacilityID;
     
-    const [posts, setPost] = useState([]);
+    const [data, setData] = useState([]);
+    const [info, setInfo] = useState([]);
 
     const renderItem = ({ item }) => (
         <Card>
@@ -38,9 +39,12 @@ export default function ReservationInfo({ navigation }) {
                     <Text>設施資訊：</Text>
                     <Text>{item.fields.FacilityInfo}</Text>
                     <Text>開放時間：</Text>
-                    <Text>{Moment(item.fields.OpeningTime).format("LT")} - {Moment(item.fields.EndTime).format('LT')}</Text>
+                    <Text>{item.fields.OpeningTime} - {item.fields.EndTime}</Text>
                     <Text></Text>
                     <Text>租借說明：</Text>
+                    <Text>
+                        租用一次以一小時為主，為保障社區住戶之權益，至多可租用至兩小時為限，若要繼續使用，請再次預約租借，造成不便，敬請見諒。
+                    </Text>
                     <Text></Text>
                 </Body>
             </CardItem>    
@@ -50,13 +54,23 @@ export default function ReservationInfo({ navigation }) {
     async function fetchData () {
         const result = await axios.get(finalUrl , axios_config);
         console.log(result.data);
-        setPost(result.data.records);
-        console.log(result.data.OpeningTime.toTimeString())
+        setData(result.data.records);
     }
 
     useEffect(() => {
-        fetchData();
+        // fetchData();
+        fetchInfo();
     }, []);
+
+    async function fetchInfo() {
+        try {
+            const resultOfInfo = await axios.get(getInfoUrl, axios_config);
+            setInfo(resultOfInfo.data.records);
+        }
+        catch (e) {
+            console.log('error:' + e)
+        }
+    }
 
     function GoToReservationCheck(id) {
         navigation.navigate('ReservationCheck', { itemId: id });
@@ -76,7 +90,7 @@ export default function ReservationInfo({ navigation }) {
         <Container style={styles.container}>
             <Content style={styles.item}>
                 <FlatList
-                    data={posts}
+                    data={info}
                     renderItem={renderItem}
                     // keyExtractor={item => item.fields.Publisher}
                 />
