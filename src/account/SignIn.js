@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Alert, Button, TextInput, Text, View, StyleSheet, Pressable, Keyboard} from 'react-native';
+import { Alert, Button, TextInput, Text, View, StyleSheet, Pressable, Keyboard } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import styles from './SignUpStyles';
 import axios from 'axios';
@@ -29,7 +29,7 @@ export default function SignIn() {
                 if (ID == UserID.toString()) {
                     if (UserData[index].fields.Password == UserPassword) {
                         setText('登入成功');
-                        PassUserIdToHome(UserData[index].id);
+                        PassUserIdToHome(UserData[index].id, UserData[index].fields);
                         break;
                     }
                 }
@@ -46,9 +46,8 @@ export default function SignIn() {
 
     useEffect(() => { getData() }, [text])
 
-    function PassUserIdToHome(id) {
-        console.log(id)
-        navigation.navigate('AfterSignIn', { userID: id });
+    function PassUserIdToHome(id, MemberInfo, Name) {
+        navigation.navigate('AfterSignIn', { userID: id, MID: MemberInfo, Name: Name });
     }
 
 

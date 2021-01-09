@@ -6,6 +6,8 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 import SignUp from './src/account/SignUp';
 import SignIn from './src/account/SignIn';
+import MemberSignIn from './src/account/AfterSignIn';
+import EditAccount from './src/account/EditAccount';
 import Home from './src/Home';
 import Forum from './src/forum/Forum';
 import Board from './src/board/Board';
@@ -57,11 +59,10 @@ export default function App() {
 }
 
 
-  function AccountScreen() {
 
-  }
 
   function AfterSignIn(props) {
+    const { userID, MID } = props.route.params
     return (
       <Tab.Navigator
         screenOptions={({ route }) => ({
@@ -82,8 +83,8 @@ export default function App() {
           inactiveTintColor: 'gray',
         }}
       >
-        <Tab.Screen name="首頁" component={HomeScreen} initialParams={{ id: props.route.params.userID }} />
-        <Tab.Screen name="會員中心" component={AccountScreen} />
+        <Tab.Screen name="首頁" component={HomeScreen} initialParams={{ id: userID }} />
+        <Tab.Screen name="會員中心" component={MemberSignIn} initialParams={{ id: { ...MID, userID } }} />
       </Tab.Navigator>
     )
   }
@@ -94,6 +95,7 @@ export default function App() {
         <defaultScreen.Screen name="SignIn" component={SignIn} options={{ title: '登入' }} />
         <defaultScreen.Screen name="SignUp" component={SignUp} options={{ title: '註冊' }} />
         <defaultScreen.Screen name="AfterSignIn" component={AfterSignIn} options={{ headerMode: 'none', headerShown: false }} />
+        <defaultScreen.Screen name="EditAccount" component={EditAccount} options={{ title: '編輯資料' }} />
       </defaultScreen.Navigator>
     </NavigationContainer>
   );
