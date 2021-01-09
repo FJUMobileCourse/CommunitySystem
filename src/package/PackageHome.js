@@ -3,6 +3,7 @@ import { Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { createStackNavigator } from "@react-navigation/stack";
+import Icon from "react-native-vector-icons/Ionicons";
 import PackageNotReceived from './PackageNotReceived';
 import PackageReceived from './PackageReceived';
   
@@ -50,8 +51,10 @@ export default function PackageHome() {
             },
           })}
           tabBarOptions={{
-            activeTintColor: 'blue',
+            activeTintColor: 'skyblue',
             inactiveTintColor: 'gray',
+            indicatorStyle: {backgroundColor: 'skyblue'},
+            labelStyle: {fontWeight: 'bold'}
           }}
         >
       

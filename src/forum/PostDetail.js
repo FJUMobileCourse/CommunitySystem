@@ -18,7 +18,6 @@ export default function PostDetail({ route, navigation }) {
     var getPostUrl = url + 'Forum/' + route.params.itemId;
     var getCommentUrl;
     var commentArray = [];
-    //var getPostUrl = url + 'Forum/' + 'rec91zlN7eqOLqV5p'; //PostID = 70，先寫死
 
     //只要到貼文詳細頁面就重新render頁面
     React.useEffect(() => {

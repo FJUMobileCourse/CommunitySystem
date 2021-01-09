@@ -10,6 +10,14 @@ const styles = StyleSheet.create({
     margin: 0,
     marginTop: StatusBar.currentHeight || 0,
   },
+  packagecontainer: {
+    flex: 1,
+    flexDirection: 'row',
+    backgroundColor: '#fff',
+    justifyContent: 'center',
+    margin: 0,
+    marginTop: StatusBar.currentHeight || 0,
+  },
   view: {
     flex: 1,
     flexDirection: 'row',
@@ -72,7 +80,13 @@ const styles = StyleSheet.create({
     width: 310,
     height: 490,
   },
-
+  textRight:{
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'flex-end'
+    
+  },
+ 
 
 
 

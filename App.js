@@ -38,29 +38,26 @@ export default function App() {
         navigation.setOptions({ tabBarVisible: true });
       }
     }, [navigation, route]);
-    return (
-      <Stack.Navigator>
-        <Stack.Screen
-          name="社區服務"
-          component={Home}
-          options={{ tabBarLabel: '社區服務' }}
-        />
-        <Stack.Screen name="Forum" options={{ title: '住戶討論區' }} component={Forum} />
-        <Stack.Screen name="PostDetail" options={{ title: '詳細內容' }} component={PostDetail} />
-        <Stack.Screen name="EditPost" options={{ title: '編輯貼文' }} component={EditPost} />
-        <Stack.Screen name="AddPost" options={{ title: '新增貼文' }} component={AddPost} />
-        <Stack.Screen name="Board" options={{ title: '社區佈告欄' }} component={Board} />
-        <Stack.Screen name="ReservationHome" options={{ title: '公設預約' }} component={ReservationHome} />
-        <Stack.Screen name="Reservation" options={{ title: '預約公設' }} component={Reservation} />
-        <Stack.Screen name="ReservationInfo" options={{ title: '公設資訊' }} component={ReservationInfo} />
-        <Stack.Screen name="ReservationCheck" options={{ title: '確定預約' }} component={ReservationCheck} />
-        <Stack.Screen name="ReservationRecord" options={{ title: '預約紀錄' }} component={ReservationRecord} />
-        <Stack.Screen name="PackageHome" options={{ title: '包裹領取' }} component={PackageHome} />
-        <Stack.Screen name="PackageNotReceived" options={{ title: '待領取包裹' }} component={PackageNotReceived} />
-        <Stack.Screen name="PackageReceived" options={{ title: '已包裹領取' }} component={PackageReceived} />
-      </Stack.Navigator>
-    );
-  }
+  return (
+    <Stack.Navigator>
+      <Stack.Screen name="社區服務" component={Home} options={{ tabBarLabel: '社區服務' }}/>
+      <Stack.Screen name="Forum" options={{ title: '住戶討論區' }} component={Forum} />
+      <Stack.Screen name="PostDetail" options={{ title: '詳細內容' }} component={PostDetail} initialParams={{ userID: route.params.id }}/>
+      <Stack.Screen name="EditPost" options={{ title: '編輯貼文' }} component={EditPost} />
+      <Stack.Screen name="AddPost" options={{ title: '新增貼文' }} component={AddPost} initialParams={{ userID: route.params.id }}/>
+      <Stack.Screen name="Board" options={{ title: '社區佈告欄' }} component={Board} />
+      <Stack.Screen name="ReservationHome" options={{ title: '公設預約' }} component={ReservationHome} />
+      <Stack.Screen name="Reservation" options={{ title: '預約公設' }} component={Reservation} />
+      <Stack.Screen name="ReservationInfo" options={{ title: '公設資訊' }} component={ReservationInfo} />
+      <Stack.Screen name="ReservationCheck" options={{ title: '確定預約' }} component={ReservationCheck} />
+      <Stack.Screen name="ReservationRecord" options={{ title: '預約紀錄' }} component={ReservationRecord} />
+      <Stack.Screen name="PackageHome" options={{ title: '包裹領取' }} component={PackageHome} />
+      <Stack.Screen name="PackageNotReceived" options={{ title: '待領取包裹' }} component={PackageNotReceived} />
+      <Stack.Screen name="PackageReceived" options={{ title: '已包裹領取' }} component={PackageReceived} />
+    </Stack.Navigator>
+  );
+}
+
 
 
 

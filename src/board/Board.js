@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { FlatList, View, Button, Modal } from 'react-native';
 import { Container, Content, Card, Header, CardItem, Right, Text, Body, Icon, Fab } from 'native-base';
 import axios from 'axios';
-import Moment from 'moment';
 import { axios_config, url } from '../Config';
 import styles from '../styles';
 
@@ -31,7 +30,7 @@ export default function Board() {
       <CardItem>
         <Body>
           <Text>{item.fields.Information}</Text>
-            <Text>發布時間:{Moment(item.fields.Date).format('YYYY-MM-DD')}</Text>
+            <Text>發布時間:{(item.fields.Date)}</Text>
         </Body>
       </CardItem>
     </Card>
@@ -42,7 +41,7 @@ export default function Board() {
         <FlatList 
           data={bposts}
           renderItem = {renderItem}
-          keyExtractor={item => item.BoardpostID}>
+          keyExtractor={item => item.fields.BoardpostID.toString()}>
         </FlatList>
     </Container>
   );
