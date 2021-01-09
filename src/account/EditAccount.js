@@ -97,6 +97,7 @@ export default function EditAccount({ route, navigation }) {
                     <TextInput style={styles.inputStyle}
                         onChangeText={text => setPassword(text)}
                         value={password}
+                        
                     />
                 </Pressable>
             </View>
