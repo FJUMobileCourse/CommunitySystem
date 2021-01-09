@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { Button, View, Text, TextInput, Modal, StyleSheet, Image } from 'react-native';
+import { Button, View, Text, TextInput, Modal, StyleSheet, Image, Pressable, Keyboard } from 'react-native';
 import styles from './SignUpStyles';
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios'
 import SignIn from './SignIn';
 import { axios_config, url } from '../Config';
+import { Container } from 'native-base';
 
 export default function SignUp() {
 
@@ -57,63 +58,67 @@ export default function SignUp() {
 
 
   return (
-    <View style={styles.form}>
+    <Container>
+      <View style={styles.form}>
+        <Pressable onPress={Keyboard.dismiss}>
 
-      <TextInput
-        style={styles.inputStyle}
-        placeholder="使用者帳號"
-        value={ID}
-        onChangeText={text => setID(text)}
-      />
+          <TextInput
+            style={styles.inputStyle}
+            placeholder="使用者帳號"
+            value={ID}
+            onChangeText={text => setID(text)}
+          />
 
-      <TextInput
-        style={styles.inputStyle}
-        placeholder="姓名"
-        value={displayName}
-        onChangeText={text => setDisplayName(text)}
-      />
+          <TextInput
+            style={styles.inputStyle}
+            placeholder="姓名"
+            value={displayName}
+            onChangeText={text => setDisplayName(text)}
+          />
 
-      <TextInput
-        style={styles.inputStyle}
-        placeholder="電子信箱"
-        value={email}
-        onChangeText={text => setEmail(text)}
-      />
+          <TextInput
+            style={styles.inputStyle}
+            placeholder="電子信箱"
+            value={email}
+            onChangeText={text => setEmail(text)}
+          />
 
-      <TextInput
-        style={styles.inputStyle}
-        placeholder="手機號碼"
-        value={phone}
-        onChangeText={text => setPhone(text)}
-      />
+          <TextInput
+            style={styles.inputStyle}
+            placeholder="手機號碼"
+            value={phone}
+            onChangeText={text => setPhone(text)}
+          />
 
-      <TextInput
-        style={styles.inputStyle}
-        placeholder="密碼"
-        value={password}
-        onChangeText={text => setPassword(text)}
-        maxLength={15}
-        secureTextEntry={true}
-      />
+          <TextInput
+            style={styles.inputStyle}
+            placeholder="密碼"
+            value={password}
+            onChangeText={text => setPassword(text)}
+            maxLength={15}
+            secureTextEntry={true}
+          />
 
-      <Button
-        onPress={addMember}
-        title="註冊"
-      />
-
-
-      <Modal transparent={true} visible={confrim}>
-        <View style={style.modalView}>
-          <Text>{message}</Text>
-          <Button title='前往登入' onPress={() => Close()}>
-          </Button>
-        </View>
-      </Modal>
+          <Button
+            onPress={addMember}
+            title="註冊"
+          />
 
 
+          <Modal transparent={true} visible={confrim}>
+            <View style={style.modalView}>
+              <Text>{message}</Text>
+              <Button title='前往登入' onPress={() => Close()}>
+              </Button>
+            </View>
+          </Modal>
 
-      <Button onPress={() => navigation.goBack()} title='已經註冊，我要登入'></Button>
-    </View>
+
+
+          <Button onPress={() => navigation.goBack()} title='已經註冊，我要登入'></Button>
+        </Pressable>
+      </View>
+    </Container>
   )
 }
 

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Alert, Button, TextInput, Text, View, StyleSheet } from 'react-native';
+import { Alert, Button, TextInput, Text, View, StyleSheet, Pressable, Keyboard} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import styles from './SignUpStyles';
 import axios from 'axios';
@@ -7,6 +7,7 @@ import Home from '../Home';
 import { set } from 'react-native-reanimated';
 import Index from '../forum/Forum';
 import { axios_config, url } from '../Config';
+import { Container } from 'native-base';
 
 export default function SignIn() {
     const navigation = useNavigation();
@@ -52,31 +53,32 @@ export default function SignIn() {
 
 
     return (
-        <View style={styles.form}>
+        <Container>
+            <View style={styles.form}>
+                <Pressable onPress={Keyboard.dismiss}>
 
-            <TextInput
-                style={styles.inputStyle}
-                placeholder="使用者帳號"
-                value={UserID}
-                onChangeText={text => setID(text)}
-            />
+                    <TextInput
+                        style={styles.inputStyle}
+                        placeholder="使用者帳號"
+                        value={UserID}
+                        onChangeText={text => setID(text)}
+                    />
 
-            <TextInput
-                style={styles.inputStyle}
-                placeholder="密碼"
-                value={UserPassword}
-                onChangeText={text => setPassword(text)}
-                maxLength={15}
-                secureTextEntry={true}
-            />
+                    <TextInput
+                        style={styles.inputStyle}
+                        placeholder="密碼"
+                        value={UserPassword}
+                        onChangeText={text => setPassword(text)}
+                        maxLength={15}
+                        secureTextEntry={true}
+                    />
 
-            <Button onPress={() => Login()} title="登入" />
-            <Button onPress={() => navigation.navigate('SignUp')} title='尚未註冊嗎？'></Button>
-            <Text>{text}</Text>
-
-        </View>
+                    <Button onPress={() => Login()} title="登入" />
+                    <Button onPress={() => navigation.navigate('SignUp')} title='尚未註冊嗎？'></Button>
+                    <Text>{text}</Text>
+                </Pressable>
+            </View>
+        </Container>
     )
 
 }
-
-

@@ -38,15 +38,11 @@ export default function App() {
     }, [navigation, route]);
   return (
     <Stack.Navigator>
-      <Stack.Screen
-        name="社區服務"
-        component={Home}
-        options={{ tabBarLabel: '社區服務' }}
-      />
+      <Stack.Screen name="社區服務" component={Home} options={{ tabBarLabel: '社區服務' }}/>
       <Stack.Screen name="Forum" options={{ title: '住戶討論區' }} component={Forum} />
-      <Stack.Screen name="PostDetail" options={{ title: '詳細內容' }} component={PostDetail} />
+      <Stack.Screen name="PostDetail" options={{ title: '詳細內容' }} component={PostDetail} initialParams={{ userID: route.params.id }}/>
       <Stack.Screen name="EditPost" options={{ title: '編輯貼文' }} component={EditPost} />
-      <Stack.Screen name="AddPost" options={{ title: '新增貼文' }} component={AddPost} />
+      <Stack.Screen name="AddPost" options={{ title: '新增貼文' }} component={AddPost} initialParams={{ userID: route.params.id }}/>
       <Stack.Screen name="Board" options={{ title: '社區佈告欄' }} component={Board} />
       <Stack.Screen name="ReservationHome" options={{ title: '公設預約' }} component={ReservationHome} />
       <Stack.Screen name="Reservation" options={{ title: '預約公設' }} component={Reservation} />
