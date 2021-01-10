@@ -4,10 +4,6 @@ import { Text, Image, StyleSheet, View, Button } from "react-native";
 import { SliderBox } from "react-native-image-slider-box";
 import logo from '../assets/community.png';
 
-
-
-
-
 //主頁面home
 export default function Home({ navigation }) {
   React.useLayoutEffect(() => {
@@ -17,10 +13,8 @@ export default function Home({ navigation }) {
     });
   }, [navigation]);
 
-  const [image] = useState([
-                                require('../assets/community.png'),
-                                require('../assets/community2.png'),
-                                require('../assets/community3.png')]);
+  const [image, setimage] = useState([require('../assets/community.jpg'),require('../assets/community2.jpg'),require('../assets/community3.jpg')]);
+  //require('../assets/community.png'),
 
 
   return (
@@ -31,6 +25,8 @@ export default function Home({ navigation }) {
         autoplay
         circleLoop
         sliderBoxHeight={400}
+        dotColor={'lightblue'}
+        inactiveDotColor={'skyblue'}
         />
       </View>
       <View style={{flex:1}}>
