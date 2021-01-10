@@ -2,13 +2,13 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import React, { useState, Component, useEffect } from 'react';
 import { FlatList, View, Text , Image ,  Button} from 'react-native';
 import { Container, Content, Card, CardItem, Left, Right, Body, Thumbnail, Fab } from 'native-base';
+import moment from 'moment'
 import styles from '../styles';
-import moment from 'moment';
 import axios from 'axios';
 import {axios_config, url} from '../Config';
 
 export default function Reservation({ navigation }) {
-    const finalUrl = url+'facility?maxRecords=30&view=Grid%20view';
+    const finalUrl = url + 'facility?maxRecords=30&view=Grid%20view';
     
     const [data, setData] = useState([]);
     const [currentTime , setCurrentTime] = useState('');
@@ -61,6 +61,7 @@ export default function Reservation({ navigation }) {
                         <Text>{item.fields.FacilityInfo}</Text>
                         <Text>開放時間：</Text>
                         <Text>{item.fields.OpeningTime} - {item.fields.EndTime}</Text>
+                        {/* <Text>{item.fields.FacilityID}</Text> */}
                     </Left>
                     <Right>
                         <Text/>
@@ -75,7 +76,7 @@ export default function Reservation({ navigation }) {
                             }}
                             type="outline"
                             title="前往預約"
-                            onPress={() => GoToReservationInfo(item.FacilityID)}
+                            onPress={() => GoToReservationInfo(item.fields.FacilityID)}
                         />
                     </Right>
                 </Body>
@@ -85,7 +86,7 @@ export default function Reservation({ navigation }) {
 
     async function fetchData () {
         const result = await axios.get(finalUrl , axios_config);
-        console.log(result.data);
+        // console.log(result.data);
         setData(result.data.records);
     }
 
@@ -93,9 +94,8 @@ export default function Reservation({ navigation }) {
         fetchData();
     }, []);
 
-
     function GoToReservationInfo(id) {
-        navigation.navigate('ReservationInfo', { FacilityID: id });
+        navigation.navigate('ReservationInfo' , { FacilityID: id });
     }
 //    function checkTime() {
 //        if (num==0){
@@ -114,7 +114,7 @@ export default function Reservation({ navigation }) {
                 <FlatList
                     data={data}
                     renderItem={renderItem}
-                    // keyExtractor={item => item.fields.Publisher}
+                    keyExtractor={item => item.fields.FacilityID}
                 />
             </Content>   
         </Container>
