@@ -24,44 +24,37 @@ export default function Reservation({ navigation }) {
             <CardItem bordered style={{backgroundColor: "#ACD6FF"}}>
                 <Body>
                     <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
-                        <Left>
-                            <Text>設施名稱：{item.fields.FacilityName}</Text>
-                        </Left>
-                        <Right>
-                            <Image 
-                                source={{
-                                    uri : item.fields.Picture[0].url
-                                }}
-                                style={{
-                                    width: 200,
-                                    height: 150,
-                                }}
-                            />
-                            <Text></Text>
-                            {currentTime < item.fields.OpeningTime && currentTime > item.fields.EndTime
-                                ?
-                                <Text>
-                                    設施狀態：
-                                    <Text style={{color: "#FF0000"}}>關閉中</Text>
-                                </Text>
-                                :
-                                <Text>
-                                    設施狀態：
-                                    <Text style={{color: "#01814A"}}>開放中</Text>
-                                </Text>
-                            }
-                        </Right>
+                        <Image 
+                            source={{
+                                uri : item.fields.Picture[0].url
+                            }}
+                            style={{
+                                width: 350,
+                                height: 250,
+                            }}
+                        />
                     </View>
                 </Body>
              </CardItem>
              <CardItem header >
                 <Body>
                     <Left>
+                        <Text>設施名稱：{item.fields.FacilityName}</Text>
+                        <Text></Text>
                         <Text>設施資訊：</Text>
                         <Text>{item.fields.FacilityInfo}</Text>
-                        <Text>開放時間：</Text>
-                        <Text>{item.fields.OpeningTime} - {item.fields.EndTime}</Text>
-                        {/* <Text>{item.fields.FacilityID}</Text> */}
+                        {currentTime < item.fields.OpeningTime && currentTime > item.fields.EndTime
+                            ?
+                            <Text style={{ flex: 2,  textAlign: 'right'}}>
+                                設施狀態：
+                                <Text style={{color: "#FF0000"}}>關閉中</Text>
+                            </Text>
+                            :
+                            <Text>
+                                設施狀態：
+                                <Text style={{color: "#01814A"}}>開放中</Text>
+                            </Text>
+                        }
                     </Left>
                     <Right>
                         <Text/>

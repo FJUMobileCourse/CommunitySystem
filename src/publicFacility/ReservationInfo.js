@@ -83,20 +83,11 @@ export default function ReservationInfo({ route, navigation }) {
     function GoToReservationCheck(id) {
         navigation.navigate('ReservationCheck', { FacilityID : id });
     }
-//    function checkTime() {
-//        if (num==0){
-//            return "未領取";
-//        }else if (num==1){
-//             return "已領取"
-//        }else{
-//            return "異常，請聯絡管理員"
-//        }
-//    }
 
     return (
       
         <Container style={styles.container}>
-            <Content>
+            <Content style={styles.item}>
                 <FlatList
                     data={info}
                     renderItem={renderItem}
