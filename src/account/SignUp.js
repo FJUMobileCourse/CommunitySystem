@@ -3,7 +3,6 @@ import { Button, View, Text, TextInput, Modal, StyleSheet, Image, Pressable, Key
 import styles from './SignUpStyles';
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios'
-import SignIn from './SignIn';
 import { axios_config, url } from '../Config';
 import { Container } from 'native-base';
 
