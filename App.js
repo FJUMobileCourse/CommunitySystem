@@ -47,11 +47,11 @@ export default function App() {
       <Stack.Screen name="EditPost" options={{ title: '編輯貼文' }} component={EditPost} />
       <Stack.Screen name="AddPost" options={{ title: '新增貼文' }} component={AddPost} initialParams={{ userID: route.params.id }}/>
       <Stack.Screen name="Board" options={{ title: '社區佈告欄' }} component={Board} />
-      <Stack.Screen name="ReservationHome" options={{ title: '公設預約' }} component={ReservationHome} />
+      <Stack.Screen name="ReservationHome" options={{ title: '公設預約' }} component={ReservationHome} initialParams={{ userID: route.params.id }}/>
       <Stack.Screen name="Reservation" options={{ title: '公設預約' }} component={Reservation} />
       <Stack.Screen name="ReservationInfo" options={{ title: '公設資訊' }} component={ReservationInfo} />
       <Stack.Screen name="ReservationCheck" options={{ title: '公設預約' }} component={ReservationCheck} initialParams={{ userID: route.params.id , FacilityID: route.params.id}} />
-      <Stack.Screen name="ReservationRecord" options={{ title: '預約紀錄' }} component={ReservationRecord} />
+      <Stack.Screen name="ReservationRecord" options={{ title: '預約紀錄' }} component={ReservationRecord} initialParams={{ MemberID: route.params.nameID }}/>
       <Stack.Screen name="PackageHome" options={{ title: '包裹領取' }} component={PackageHome} initialParams={{ MemberID: route.params.nameID }}/>
       <Stack.Screen name="PackageNotReceived" options={{ title: '待領取包裹' }} component={PackageNotReceived} initialParams={{ MemberID: route.params.nameID }}/>
       <Stack.Screen name="PackageReceived" options={{ title: '已包裹領取' }} component={PackageReceived} initialParams={{  MemberID: route.params.nameID }}/>
