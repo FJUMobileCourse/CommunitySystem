@@ -6,12 +6,11 @@ import styles from '../styles';
 import axios from 'axios';
 import {axios_config, url} from '../Config';
 
-export default function ReservationInfo({ navigation }) {
-    var facilityID = '' ;
-    const finalUrl = url + 'facility?' + facilityID + 'maxRecords=30&view=Grid%20view';
-    var getInfoUrl = url + 'facility/' + route.params.FacilityID;
-    
-    const [data, setData] = useState([]);
+export default function ReservationInfo({ route, navigation }) {
+    // var facilityID = '' ;
+    // const finalUrl = url + 'facility?maxRecords=30&view=Grid%20view';
+    const getInfoUrl = url + 'facility?filterByFormula=FacilityID+%3D+' + route.params.FacilityID;
+
     const [info, setInfo] = useState([]);
 
     const renderItem = ({ item }) => (
@@ -47,43 +46,43 @@ export default function ReservationInfo({ navigation }) {
                     </Text>
                     <Text></Text>
                 </Body>
-            </CardItem>    
+            </CardItem>
+            <CardItem>
+                <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
+                    <Button 
+                        style={{
+                            flex: 1 ,
+                            // flexDirection: 'row',
+                            justifyContent: 'center',
+                            alignItems: 'center'
+                        }}
+                        title="我要預約"
+                        onPress={() => GoToReservationCheck(item.fields.FacilityID)}
+                    />
+                </View>
+            </CardItem>
         </Card>
     )
-
-    async function fetchData () {
-        const result = await axios.get(finalUrl , axios_config);
-        console.log(result.data);
-        setData(result.data.records);
-    }
-
-    useEffect(() => {
-        // fetchData();
-        fetchInfo();
-    }, []);
 
     async function fetchInfo() {
         try {
             const resultOfInfo = await axios.get(getInfoUrl, axios_config);
             setInfo(resultOfInfo.data.records);
+            // console.log(resultOfInfo.data);
+            // console.log(getInfoUrl);
         }
         catch (e) {
             console.log('error:' + e)
         }
     }
 
+    useEffect(() => {
+        fetchInfo();
+    }, []);
+
     function GoToReservationCheck(id) {
-        navigation.navigate('ReservationCheck', { itemId: id });
+        navigation.navigate('ReservationCheck', { FacilityID : id });
     }
-//    function checkTime() {
-//        if (num==0){
-//            return "未領取";
-//        }else if (num==1){
-//             return "已領取"
-//        }else{
-//            return "異常，請聯絡管理員"
-//        }
-//    }
 
     return (
       
@@ -92,17 +91,7 @@ export default function ReservationInfo({ navigation }) {
                 <FlatList
                     data={info}
                     renderItem={renderItem}
-                    // keyExtractor={item => item.fields.Publisher}
-                />
-                <Button 
-                    style={{
-                        flex: 1 ,
-                        // flexDirection: 'row',
-                        justifyContent: 'center',
-                        alignItems: 'center'
-                    }}
-                    title="我要預約"
-                    onPress={() => GoToReservationCheck(item.id)}
+                    keyExtractor={item => item.fields.FacilityID}
                 />
             </Content>   
         </Container>
