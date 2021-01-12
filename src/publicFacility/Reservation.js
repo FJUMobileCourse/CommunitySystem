@@ -68,7 +68,7 @@ export default function Reservation({ navigation }) {
                                 borderRadius: 5
                             }}
                             type="outline"
-                            title="前往預約"
+                            title="查看詳細資訊"
                             onPress={() => GoToReservationInfo(item.fields.FacilityID)}
                         />
                     </Right>
@@ -90,15 +90,6 @@ export default function Reservation({ navigation }) {
     function GoToReservationInfo(id) {
         navigation.navigate('ReservationInfo' , { FacilityID: id });
     }
-//    function checkTime() {
-//        if (num==0){
-//            return "未領取";
-//        }else if (num==1){
-//             return "已領取"
-//        }else{
-//            return "異常，請聯絡管理員"
-//        }
-//    }
 
     return (
       

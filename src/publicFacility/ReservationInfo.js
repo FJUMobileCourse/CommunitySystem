@@ -42,7 +42,7 @@ export default function ReservationInfo({ route, navigation }) {
                     <Text></Text>
                     <Text>租借說明：</Text>
                     <Text>
-                        租用一次以一小時為主，為保障社區住戶之權益，至多可租用至兩小時為限，若要繼續使用，請再次預約租借，造成不便，敬請見諒。
+                        租用1次以1小時為限，為保障社區住戶之權益，若要繼續使用，請再次預約租借，造成不便，敬請見諒。
                     </Text>
                     <Text></Text>
                 </Body>
@@ -52,7 +52,6 @@ export default function ReservationInfo({ route, navigation }) {
                     <Button 
                         style={{
                             flex: 1 ,
-                            // flexDirection: 'row',
                             justifyContent: 'center',
                             alignItems: 'center'
                         }}
