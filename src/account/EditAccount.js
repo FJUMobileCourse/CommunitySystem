@@ -2,12 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { Alert, Button, TextInput, Text, View, Pressable, Keyboard, FlatList, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import styles from './SignUpStyles';
+import styless from '../styles'
 import axios from 'axios';
-import Home from '../Home';
-import { set } from 'react-native-reanimated';
 import { axios_config, url } from '../Config';
 import { Container } from 'native-base';
-import { render } from 'react-dom';
 
 
 
@@ -21,12 +19,13 @@ export default function EditAccount({ route, navigation }) {
     const [password, setPassword] = useState(route.params.UserInfo.Password);
     const finalUrl = url + 'Member';
 
-    // React.useLayoutEffect(() => {
-    //     navigation.setOptions({
-    //         headerBackTitleVisible: false,
-    //         headerBackImage: () => <Image style={styles.backImage} source={require('../image/cross.png')} />,
-    //     });
-    // }, [navigation]);
+    React.useLayoutEffect(() => {
+        navigation.setOptions({
+            headerBackTitleVisible: false,
+            headerBackImage: () => <Image style={styless.backImage} source={require('../image/cross.png')} />,
+        });
+    }, [navigation]);
+
 
     useEffect(() => {
         navigation.setOptions({
@@ -36,6 +35,8 @@ export default function EditAccount({ route, navigation }) {
         });
     }, [phone, ID, name, email, password])
 
+    //console.log(route.params.UserInfo)
+    console.log(route.params.id)
 
     async function DoModify() {
         const editInfo = {
@@ -47,7 +48,8 @@ export default function EditAccount({ route, navigation }) {
                     Email: email,
                     Password: password
                 },
-                id: route.params.UserInfo.userID
+                id: route.params.id
+                
             }]
         }
 
@@ -65,6 +67,7 @@ export default function EditAccount({ route, navigation }) {
         }
     }
 
+    
     return (
         <Container>
             <View style={styles.form}>

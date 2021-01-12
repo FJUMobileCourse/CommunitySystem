@@ -3,7 +3,6 @@ import { Button, View, Text, TextInput, Modal, StyleSheet, Image, Pressable, Key
 import styles from './SignUpStyles';
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios'
-import SignIn from './SignIn';
 import { axios_config, url } from '../Config';
 import { Container } from 'native-base';
 
@@ -11,12 +10,12 @@ export default function SignUp() {
 
   const navigation = useNavigation();
 
-  React.useLayoutEffect(() => {
-    navigation.setOptions({
-      headerBackTitleVisible: false,
-      headerBackImage: () => <Image source={require('../image/empty.png')} />,
-    });
-  }, [navigation]);
+  // React.useLayoutEffect(() => {
+  //   navigation.setOptions({
+  //     headerBackTitleVisible: false,
+  //     headerBackImage: () => <Image source={require('../image/empty.png')} />,
+  //   });
+  // }, [navigation]);
 
   const [ID, setID] = useState("");
   const [displayName, setDisplayName] = useState("");
@@ -38,6 +37,12 @@ export default function SignUp() {
           Password: password
         }
       }
+
+      if (ID == '' || name == '' || phone == '' || email == '' || password == '') {
+        Alert.alert("", "內容不得為空！");
+        return;
+    }
+
       console.log('newPerson', newPerson)
       const result = await axios.post(finalUrl, newPerson, axios_config);
 
@@ -58,10 +63,10 @@ export default function SignUp() {
 
 
   return (
+   
     <Container>
       <View style={styles.form}>
-        <Pressable onPress={Keyboard.dismiss}>
-
+        <Pressable onPress={Keyboard.dismiss} style={{ flex: 1, justifyContent: 'center' }}>
           <TextInput
             style={styles.inputStyle}
             placeholder="使用者帳號"
@@ -97,7 +102,7 @@ export default function SignUp() {
             onChangeText={text => setPassword(text)}
             maxLength={15}
             secureTextEntry={true}
-          />
+          /> 
 
           <Button
             onPress={addMember}
@@ -112,9 +117,6 @@ export default function SignUp() {
               </Button>
             </View>
           </Modal>
-
-
-
           <Button onPress={() => navigation.goBack()} title='已經註冊，我要登入'></Button>
         </Pressable>
       </View>

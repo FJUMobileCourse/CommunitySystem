@@ -59,12 +59,25 @@ export default function App() {
   );
 }
 
+  function AccountScreen({route}) {
+    const { id, mid } = route.params;
+    //console.log(route)
+    //console.log(id)
+    //console.log(mid)
+    return (
+      <Account.Navigator>
+        <Account.Screen name="AfterSignIn" component={MemberSignIn} options={{ title: '會員中心' }} initialParams={{ id: id, mid: mid }} />
+        <Account.Screen name="EditAccount" component={EditAccount} options={ { title:'編輯資料' }} />
+      </Account.Navigator>
+    );
+  }
 
 
 
-  function AfterSignIn(props) {
+
+  function AfterLogIn(props) {
     const { userID, MID } = props.route.params
-    
+    //console.log(props.route.params)
     return (
       <Tab.Navigator
         screenOptions={({ route }) => ({
@@ -85,8 +98,8 @@ export default function App() {
           inactiveTintColor: 'gray',
         }}
       >
-        <Tab.Screen name="首頁" component={HomeScreen} initialParams={{ id: userID , nameID: MID.MemberID }} />
-        <Tab.Screen name="會員中心" component={MemberSignIn} initialParams={{ id: { ...MID, userID } }} />
+        <Tab.Screen name="首頁" component={HomeScreen} initialParams={{ id: userID }} />
+        <Tab.Screen name="會員中心" component={AccountScreen} initialParams={{ id: userID, mid: MID }} />
       </Tab.Navigator>
     )
   }
@@ -96,8 +109,7 @@ export default function App() {
       <defaultScreen.Navigator>
         <defaultScreen.Screen name="SignIn" component={SignIn} options={{ title: '登入' }} />
         <defaultScreen.Screen name="SignUp" component={SignUp} options={{ title: '註冊' }} />
-        <defaultScreen.Screen name="AfterSignIn" component={AfterSignIn} options={{ headerMode: 'none', headerShown: false }} />
-        <defaultScreen.Screen name="EditAccount" component={EditAccount} options={{ title: '編輯資料' }} />
+        <defaultScreen.Screen name="AfterLogIn" component={AfterLogIn} options={{ headerMode: 'none', headerShown: false }} />
       </defaultScreen.Navigator>
     </NavigationContainer>
   );

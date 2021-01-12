@@ -47,7 +47,7 @@ export default function SignIn() {
     useEffect(() => { getData() }, [text])
 
     function PassUserIdToHome(id, MemberInfo, Name) {
-        navigation.navigate('AfterSignIn', { userID: id, MID: MemberInfo, Name: Name });
+        navigation.navigate('AfterLogIn', { userID: id, MID: MemberInfo, Name: Name });
     }
 
 

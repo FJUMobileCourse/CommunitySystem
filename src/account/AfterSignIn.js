@@ -1,62 +1,84 @@
 import React, { useEffect, useState } from 'react';
-import { Alert, Button, TextInput, Text, View, StyleSheet, Pressable, Keyboard, Image } from 'react-native';
+import { Button, Text, View, Pressable, Keyboard, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import styles from './SignUpStyles';
+import axios from 'axios';
 import { Container } from 'native-base';
-
+import { axios_config, url } from '../Config';
 
 
 export default function AfterSignIn({ route }) {
 
+    console.log(route.params.id)
+
     const navigation = useNavigation();
-    const UserID = route.params
+    const UserID = route.params.mid
+    const [UserData, setUserData] = useState([]);
+    const finalUrl = url + 'Member/' + route.params.id;
+
+    React.useLayoutEffect(() => {
+        navigation.setOptions({
+            headerBackTitleVisible: false,
+        });
+    }, [navigation]);
+
+    React.useEffect(() => {
+        const unsubscribe = navigation.addListener('focus', () => {
+            getData();
+        });
+        //類似停止監聽
+        return unsubscribe;
+    }, [navigation]);
 
 
-    function PassUserIdToHome(id, MemberInfo, Name) {
-        navigation.navigate('EditAccount', { userID: id, MID: MemberInfo, Name: Name });
+    async function getData() {
+        const result = await axios.get(finalUrl, axios_config);
+        setUserData(result.data.fields)
+        //console.log(result)
     }
-    useEffect(() => {
-        console.log('user', UserID.id.ProfilePic[0].url)
-    }, [])
+
+
+    // useEffect(() => {
+    //     console.log('user', UserID.id.ProfilePic[0].url)
+    // }, [])
 
     return (
         <Container>
             <View style={styles.form}>
                 <Pressable onPress={Keyboard.dismiss}>
                     <Image
-                        style={{ width: 200, height: 200, alignSelf: 'center', borderRadius: '100%', marginBottom: 30, }}
+                        style={{ width: 200, height: 200, alignSelf: 'center', borderRadius: 10, marginBottom: 30, }}
                         source={{
-                            uri: UserID.id.ProfilePic[0].url,
+                            uri: UserID.ProfilePic[0].url,
                         }}
                     />
 
                     <View style={styles.inputStyle}>
                         <Text style={styles.titlestyle}>使用者帳號：</Text>
-                        <Text >{UserID.id.ID}</Text>
+                        <Text >{UserData.ID}</Text>
                     </View>
 
                     <View style={styles.inputStyle}>
                         <Text style={styles.titlestyle}>姓名：</Text>
-                        <Text>{UserID.id.Name}</Text>
+                        <Text>{UserData.Name}</Text>
                     </View>
 
                     <View style={styles.inputStyle}>
                         <Text style={styles.titlestyle}>電子信箱：</Text>
-                        <Text>{UserID.id.Email}</Text>
+                        <Text>{UserData.Email}</Text>
                     </View>
 
                     <View style={styles.inputStyle}>
                         <Text style={styles.titlestyle}>手機號碼：</Text>
-                        <Text>{UserID.id.Phone}</Text>
+                        <Text>{UserData.Phone}</Text>
                     </View>
 
                     <View style={styles.inputStyle}>
                         <Text style={styles.titlestyle}>密碼：</Text>
-                        <Text>{UserID.id.Password}</Text>
+                        <Text>{UserData.Password}</Text>
                     </View>
 
-                    <Button onPress={() => navigation.navigate('EditAccount', { UserInfo: UserID.id })} title='編輯資料'></Button>
-
+                    <Button onPress={() => navigation.navigate('EditAccount', { UserInfo: UserID, id: route.params.id })} title='編輯資料'></Button>
                 </Pressable>
             </View>
         </Container>
