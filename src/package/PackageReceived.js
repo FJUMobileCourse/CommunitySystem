@@ -1,6 +1,6 @@
 import Icon from 'react-native-vector-icons/Ionicons';
 import React, { useState, Component, useEffect } from 'react';
-import { FlatList, View, Text, Button} from 'react-native';
+import { FlatList, View, Text, Button } from 'react-native';
 import { Container, Content, Card, CardItem, Left, Right, Body, Thumbnail, Fab } from 'native-base';
 import styles from '../styles';
 import Modal, {
@@ -17,16 +17,16 @@ import axios from 'axios';
 import Moment from 'moment';
 import { axios_config, url } from '../Config';
 
-export default function PackageReceived(route) {
+export default function PackageReceived({ route }) {
     //辨別登入者身份
-    var loginID = '22';
+    const loginID = route.params.Package4ID;
 
     const finalUrl = url + 'tbl1OVTLhLIvUk3iZ?filterByFormula=AND(PackageStatus%3D1%2CMemberID%3D' + loginID + ')&maxRecords=30&sort%5B0%5D%5Bfield%5D=PackageStatus&sort%5B0%5D%5Bdirection%5D=desc';
 
     const [packageData, setPackageData] = useState([]);
     const [modalVisible, setModalVisible] = useState(false);
-    const [changeVisible, setChangeVisible] = useState(false);
-    
+
+
     const renderItem = ({ item }) => (
         <Card>
             <CardItem bordered>
@@ -34,11 +34,11 @@ export default function PackageReceived(route) {
                 <Body>
                     <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                         <Left style={{ maxWidth: '20%' }}>
-                            <Text style={{fontWeight: "bold"}}>{item.fields.PackageType}</Text>
+                            <Text style={{ fontWeight: "bold" }}>{item.fields.PackageType}</Text>
                         </Left>
                         <Right>
-                            <View  backgroundColor={changeStatusColor(item.fields.PackageStatus)} style={{flex: 1, borderRadius: 5}}>
-                        <Button title={checkStatusButton(item.fields.PackageStatus)} color='white'></Button>
+                            <View backgroundColor={changeStatusColor(item.fields.PackageStatus)} style={{ flex: 1, borderRadius: 5 }}>
+                                <Button title={checkStatusButton(item.fields.PackageStatus)} color='white'></Button>
                             </View>
                         </Right>
                     </View>
@@ -76,7 +76,7 @@ export default function PackageReceived(route) {
 
     useEffect(() => {
         fetchData();
-    }, [modalVisible]);
+    }, []);
 
 
     function checkStatusButton(num) {
@@ -108,7 +108,7 @@ export default function PackageReceived(route) {
             <FlatList style={styles.item}
                 data={packageData}
                 renderItem={renderItem}
-                />
+            />
 
 
         </Container>
