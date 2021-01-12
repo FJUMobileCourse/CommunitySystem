@@ -10,7 +10,7 @@ import {axios_config, url} from '../Config';
 
 export default function ReservationCheck({ route , navigation }) {
     const finalUrl = url + 'facility?filterByFormula=FacilityID+%3D+' + route.params.FacilityID;
-    const postUrl = url + 'ReservationRecord?maxRecords=30&view=Grid%20view';
+    const postUrl = url + 'ReservationRecord';
     
     const [posts, setPost] = useState([]);
     const [date, setDate] = useState(new Date());
@@ -141,30 +141,26 @@ export default function ReservationCheck({ route , navigation }) {
     async function AddRecords() {
         const newReservation = {
             fields: {
-                FacilityID : [route.params.FacilityID] ,
+                Member : [route.params.userID] ,
+                FacilityID : route.params.FacilityID ,
+                ReservationCount : Numselected,
                 ReservationDate : date ,
                 ReservationTime : Timeselected ,
             }
         }
-        try {
-            await axios.post(postUrl, newReservation, axios_config);
+        await axios.post(postUrl, newReservation, axios_config)
+        .then(res => {
+            console.log("reservation :" , newReservation)
             alert("預約成功！");
             navigation.goBack('Home');
-        }
-        catch (e) {
-            console.log("error:" + e);
-        }
+        })    
+        .catch (function(error)
+        {
+            console.log("reservation :" , newReservation)
+            console.log('error', error)
+            console.log(error.response.status);
+        })
     }
-
-//    function checkTime() {
-//        if (num==0){
-//            return "未領取";
-//        }else if (num==1){
-//             return "已領取"
-//        }else{
-//            return "異常，請聯絡管理員"
-//        }
-//    }
 
     return (
         <Container style={styles.container}>
