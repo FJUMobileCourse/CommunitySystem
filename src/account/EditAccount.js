@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Alert, Button, TextInput, Text, View, Pressable, Keyboard, FlatList, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import styles from './SignUpStyles';
+import styless from '../styles'
 import axios from 'axios';
 import { axios_config, url } from '../Config';
 import { Container } from 'native-base';
@@ -21,7 +22,7 @@ export default function EditAccount({ route, navigation }) {
     React.useLayoutEffect(() => {
         navigation.setOptions({
             headerBackTitleVisible: false,
-            headerBackImage: () => <Image style={styles.backImage} source={require('../image/cross.png')} />,
+            headerBackImage: () => <Image style={styless.backImage} source={require('../image/cross.png')} />,
         });
     }, [navigation]);
 
@@ -34,7 +35,9 @@ export default function EditAccount({ route, navigation }) {
         });
     }, [phone, ID, name, email, password])
 
-    
+    //console.log(route.params.UserInfo)
+    console.log(route.params.id)
+
     async function DoModify() {
         const editInfo = {
             records: [{
@@ -45,7 +48,8 @@ export default function EditAccount({ route, navigation }) {
                     Email: email,
                     Password: password
                 },
-                id: route.params.UserInfo.userID
+                id: route.params.id
+                
             }]
         }
 

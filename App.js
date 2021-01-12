@@ -59,12 +59,14 @@ export default function App() {
   }
 
   function AccountScreen({route}) {
-    const { userID, MID } = route.params;
-    console.log(route.params)
+    const { id, mid } = route.params;
+    //console.log(route)
+    //console.log(id)
+    //console.log(mid)
     return (
       <Account.Navigator>
-        <AccountScreen.Screen name="AfterSignIn" component={MemberSignIn} options={{ title: '會員中心' }} initialParams={{ id: { ...MID, userID } }} />
-        <AccountScreen.Screen name="EditAccount" component={EditAccount} options={ { title:'編輯資料' }} />
+        <Account.Screen name="AfterSignIn" component={MemberSignIn} options={{ title: '會員中心' }} initialParams={{ id: id, mid: mid }} />
+        <Account.Screen name="EditAccount" component={EditAccount} options={ { title:'編輯資料' }} />
       </Account.Navigator>
     );
   }
@@ -74,6 +76,7 @@ export default function App() {
 
   function AfterLogIn(props) {
     const { userID, MID } = props.route.params
+    //console.log(props.route.params)
     return (
       <Tab.Navigator
         screenOptions={({ route }) => ({
@@ -95,7 +98,7 @@ export default function App() {
         }}
       >
         <Tab.Screen name="首頁" component={HomeScreen} initialParams={{ id: userID }} />
-        <Tab.Screen name="會員中心" component={AccountScreen} initialParams={{ id: { ...MID, userID } }} />
+        <Tab.Screen name="會員中心" component={AccountScreen} initialParams={{ id: userID, mid: MID }} />
       </Tab.Navigator>
     )
   }

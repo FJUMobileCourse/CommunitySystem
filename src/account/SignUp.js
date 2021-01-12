@@ -37,6 +37,12 @@ export default function SignUp() {
           Password: password
         }
       }
+
+      if (ID == '' || name == '' || phone == '' || email == '' || password == '') {
+        Alert.alert("", "內容不得為空！");
+        return;
+    }
+
       console.log('newPerson', newPerson)
       const result = await axios.post(finalUrl, newPerson, axios_config);
 

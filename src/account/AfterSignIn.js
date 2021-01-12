@@ -9,10 +9,18 @@ import { axios_config, url } from '../Config';
 
 export default function AfterSignIn({ route }) {
 
+    console.log(route.params.id)
+
     const navigation = useNavigation();
-    const UserID = route.params
+    const UserID = route.params.mid
     const [UserData, setUserData] = useState([]);
-    const finalUrl = url + 'Member/' + route.params.id.userID;
+    const finalUrl = url + 'Member/' + route.params.id;
+
+    React.useLayoutEffect(() => {
+        navigation.setOptions({
+            headerBackTitleVisible: false,
+        });
+    }, [navigation]);
 
     React.useEffect(() => {
         const unsubscribe = navigation.addListener('focus', () => {
@@ -26,7 +34,7 @@ export default function AfterSignIn({ route }) {
     async function getData() {
         const result = await axios.get(finalUrl, axios_config);
         setUserData(result.data.fields)
-        console.log(result)
+        //console.log(result)
     }
 
 
@@ -41,7 +49,7 @@ export default function AfterSignIn({ route }) {
                     <Image
                         style={{ width: 200, height: 200, alignSelf: 'center', borderRadius: 10, marginBottom: 30, }}
                         source={{
-                            uri: UserID.id.ProfilePic[0].url,
+                            uri: UserID.ProfilePic[0].url,
                         }}
                     />
 
@@ -70,8 +78,7 @@ export default function AfterSignIn({ route }) {
                         <Text>{UserData.Password}</Text>
                     </View>
 
-                    <Button onPress={() => navigation.navigate('EditAccount', { UserInfo: UserID.id })} title='編輯資料'></Button>
-
+                    <Button onPress={() => navigation.navigate('EditAccount', { UserInfo: UserID, id: route.params.id })} title='編輯資料'></Button>
                 </Pressable>
             </View>
         </Container>
