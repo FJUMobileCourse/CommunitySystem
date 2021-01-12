@@ -5,6 +5,7 @@ import { Container, Content, Card, CardItem , Left , Right, Body , Thumbnail , F
 import DateTimePicker from '@react-native-community/datetimepicker';
 import styles from '../styles';
 import axios from 'axios';
+import moment from "moment";
 import {axios_config, url} from '../Config';
 
 
@@ -138,19 +139,21 @@ export default function ReservationCheck({ route , navigation }) {
         fetchData();
     }, []);
 
+    const send_date = moment(date).format("YYYY-MM-DD");
+
     async function AddRecords() {
         const newReservation = {
             fields: {
                 Member : [route.params.userID] ,
-                FacilityID : route.params.FacilityID ,
+                Facility : [route.params.Id] ,
                 ReservationCount : Numselected,
-                ReservationDate : date ,
+                ReservationDate : send_date ,
                 ReservationTime : Timeselected ,
             }
         }
         await axios.post(postUrl, newReservation, axios_config)
         .then(res => {
-            console.log("reservation :" , newReservation)
+            // console.log("reservation :" , newReservation)
             alert("預約成功！");
             navigation.goBack('Home');
         })    
@@ -164,13 +167,12 @@ export default function ReservationCheck({ route , navigation }) {
 
     return (
         <Container style={styles.container}>
-            <Content style={styles.item}>
-                <FlatList
-                    data={posts}
-                    renderItem={renderItem}
-                    keyExtractor={item => item.fields.FacilityID}
-                />
-            </Content>   
+            <FlatList
+                style={styles.item}
+                data={posts}
+                renderItem={renderItem}
+                keyExtractor={item => item.fields.FacilityID}
+            /> 
         </Container>
     );
 }

@@ -69,7 +69,7 @@ export default function Reservation({ navigation }) {
                             }}
                             type="outline"
                             title="查看詳細資訊"
-                            onPress={() => GoToReservationInfo(item.fields.FacilityID)}
+                            onPress={() => GoToReservationInfo(item.fields.FacilityID , item.id)}
                         />
                     </Right>
                 </Body>
@@ -79,7 +79,6 @@ export default function Reservation({ navigation }) {
 
     async function fetchData () {
         const result = await axios.get(finalUrl , axios_config);
-        // console.log(result.data);
         setData(result.data.records);
     }
 
@@ -87,20 +86,20 @@ export default function Reservation({ navigation }) {
         fetchData();
     }, []);
 
-    function GoToReservationInfo(id) {
-        navigation.navigate('ReservationInfo' , { FacilityID: id });
+    function GoToReservationInfo(id , longId) {
+        navigation.navigate('ReservationInfo' , { FacilityID: id , Id: longId});
     }
+    
 
     return (
       
         <Container style={styles.container}>
-            <Content style={styles.item}>
-                <FlatList
-                    data={data}
-                    renderItem={renderItem}
-                    keyExtractor={item => item.fields.FacilityID}
-                />
-            </Content>   
+            <FlatList
+                style={styles.item}
+                data={data}
+                renderItem={renderItem}
+                keyExtractor={item => item.fields.FacilityID}
+            />  
         </Container>
     );
 }

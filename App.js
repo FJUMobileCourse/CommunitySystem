@@ -50,7 +50,7 @@ export default function App() {
       <Stack.Screen name="ReservationHome" options={{ title: '公設預約' }} component={ReservationHome} />
       <Stack.Screen name="Reservation" options={{ title: '公設預約' }} component={Reservation} />
       <Stack.Screen name="ReservationInfo" options={{ title: '公設資訊' }} component={ReservationInfo} />
-      <Stack.Screen name="ReservationCheck" options={{ title: '公設預約' }} component={ReservationCheck} initialParams={{ userID: route.params.id }} />
+      <Stack.Screen name="ReservationCheck" options={{ title: '公設預約' }} component={ReservationCheck} initialParams={{ userID: route.params.id , FacilityID: route.params.id}} />
       <Stack.Screen name="ReservationRecord" options={{ title: '預約紀錄' }} component={ReservationRecord} />
       <Stack.Screen name="PackageHome" options={{ title: '包裹領取' }} component={PackageHome} initialParams={{ MemberID: route.params.nameID }}/>
       <Stack.Screen name="PackageNotReceived" options={{ title: '待領取包裹' }} component={PackageNotReceived} initialParams={{ MemberID: route.params.nameID }}/>
