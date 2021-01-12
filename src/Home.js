@@ -1,4 +1,4 @@
-import React, { useState, Component, useEffect } from 'react';
+import React from 'react';
 import { Text, Image, StyleSheet, View, Button , Dimensions } from "react-native";
 //import Slideshow from 'react-native-image-slider-show';
 //import { SliderBox } from "react-native-image-slider-box";
