@@ -11,8 +11,8 @@ export default function ReservationRecord({ route , navigation }) {
     //到時候這裡要接登入者的身分，去抓該登入者的預約紀錄來顯示
     
     const loginID = route.params.LoginID;
-    console.log(route);
-    const finalUrl = url + 'ReservationRecord?' + loginID +'sort%5B0%5D%5Bfield%5D=ReservationDate&sort%5B0%5D%5Bdirection%5D=desc';
+    console.log(route)
+    const finalUrl = url + 'ReservationRecord?filterByFormula=MemberID%3D' + loginID +'&sort%5B0%5D%5Bfield%5D=ReservationDate&sort%5B0%5D%5Bdirection%5D=desc';
 
     React.useEffect(() => {
         const unsubscribe = navigation.addListener('focus', () => {

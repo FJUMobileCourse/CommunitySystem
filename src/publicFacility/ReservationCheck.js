@@ -1,6 +1,6 @@
 import Icon from 'react-native-vector-icons/Ionicons';  
 import React, { useState, Component, useEffect } from 'react';
-import { FlatList, View, Text , Image , Button } from 'react-native';
+import { FlatList, View, Text , Image , Button, Alert } from 'react-native';
 import { Container, Content, Card, CardItem , Left , Right, Body , Thumbnail , Fab , Picker } from 'native-base';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import styles from '../styles';
@@ -154,7 +154,8 @@ export default function ReservationCheck({ route , navigation }) {
         await axios.post(postUrl, newReservation, axios_config)
         .then(res => {
             // console.log("reservation :" , newReservation)
-            alert("預約成功！");
+    
+            Alert.alert("","預約成功");
             navigation.goBack('Home');
         })    
         .catch (function(error)

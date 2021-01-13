@@ -14,6 +14,15 @@ export default function SignIn() {
     const [text, setText] = useState("");
     const finalUrl = url + 'Member';
 
+   //只要到貼文詳細頁面就重新render頁面
+   React.useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+        setText("");
+    });
+    //類似停止監聽
+    return unsubscribe;
+}, [navigation]);
+
     async function getData() {
         const result = await axios.get(finalUrl, axios_config);
         setUserData(result.data.records)
@@ -25,7 +34,9 @@ export default function SignIn() {
                 const ID = UserData[index].fields.ID;
                 if (ID == UserID.toString()) {
                     if (UserData[index].fields.Password == UserPassword) {
-                        setText('登入成功');
+                        //setText('登入成功');
+                        setID('');
+                        setPassword('');
                         PassUserIdToHome(UserData[index].id, UserData[index].fields);
                         break;
                     }

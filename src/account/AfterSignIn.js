@@ -41,15 +41,21 @@ export default function AfterSignIn({ route }) {
     // useEffect(() => {
     //     console.log('user', UserID.id.ProfilePic[0].url)
     // }, [])
-
+    function geturl(){
+        if (UserID.ProfilePic == undefined) {
+            return "https://dl.airtable.com/.attachmentThumbnails/1fe0f25e9293dc5d669babc55c652183/c859d817";
+        }
+        return UserID.ProfilePic[0].url;
+    }
+    
     return (
         <Container>
             <View style={styles.form}>
                 <Pressable onPress={Keyboard.dismiss}>
                     <Image
-                        style={{ width: 200, height: 200, alignSelf: 'center', borderRadius: 10, marginBottom: 30, }}
+                        style={{ width: 200, height: 200, alignSelf: 'center', borderRadius: 100, marginBottom: 30, }}
                         source={{
-                            uri: UserID.ProfilePic[0].url,
+                            uri: geturl()
                         }}
                     />
 
@@ -79,6 +85,7 @@ export default function AfterSignIn({ route }) {
                     </View>
 
                     <Button onPress={() => navigation.navigate('EditAccount', { UserInfo: UserID, id: route.params.id })} title='編輯資料'></Button>
+                    <Button title="登出" onPress={()=> navigation.navigate('SignIn')}></Button>
                 </Pressable>
             </View>
         </Container>

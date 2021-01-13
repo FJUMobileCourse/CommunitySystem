@@ -24,6 +24,7 @@ function ReservationScreen() {
   }
   
   function ReservationRecordScreen({route}) {
+    console.log(route)
     return (
     <Stack.Navigator>
         <Stack.Screen name="ReservationRecord" component={ReservationRecord} options={{headerMode: 'none', headerShown : false}} initialParams={{ LoginID: route.params.UserID }} />
@@ -38,13 +39,13 @@ export default function ReservationHome({route}) {
             tabBarIcon: ({ focused, color, size }) => {
               let iconName;
   
-              if (route.name === 'PackageNotReceived') {
-                iconName = focused
-                  ? 'ios-information-circle'
-                  : 'ios-information-circle-outline';
-              } else if (route.name === 'PackageReceived') {
-                iconName = focused ? 'ios-list-box' : 'ios-list';
-              }
+              // if (route.name === 'PackageNotReceived') {
+              //   iconName = focused
+              //     ? 'ios-information-circle'
+              //     : 'ios-information-circle-outline';
+              // } else if (route.name === 'PackageReceived') {
+              //   iconName = focused ? 'ios-list-box' : 'ios-list';
+              // }
   
               // You can return any component that you like here!
               return <Ionicons name={iconName} size={size} color={color} />;

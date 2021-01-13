@@ -31,14 +31,14 @@ export default function App() {
 
   function HomeScreen({ navigation, route }) {
     
-    React.useLayoutEffect(() => {
-      const routeName = getFocusedRouteNameFromRoute(route);
-      if (routeName === "PackageHome") {
-        navigation.setOptions({ tabBarVisible: false });
-      } else {
-        navigation.setOptions({ tabBarVisible: true });
-      }
-    }, [navigation, route]);
+    // React.useLayoutEffect(() => {
+    //   const routeName = getFocusedRouteNameFromRoute(route);
+    //   if (routeName === "PackageHome") {
+    //     navigation.setOptions({ tabBarVisible: false });
+    //   } else {
+    //     navigation.setOptions({ tabBarVisible: true });
+    //   }
+    // }, [navigation, route]);
   return (
     <Stack.Navigator>
       <Stack.Screen name="社區服務" component={Home} options={{ tabBarLabel: '社區服務' }}/>
@@ -47,7 +47,7 @@ export default function App() {
       <Stack.Screen name="EditPost" options={{ title: '編輯貼文' }} component={EditPost} />
       <Stack.Screen name="AddPost" options={{ title: '新增貼文' }} component={AddPost} initialParams={{ userID: route.params.id }}/>
       <Stack.Screen name="Board" options={{ title: '社區佈告欄' }} component={Board} />
-      <Stack.Screen name="ReservationHome" options={{ title: '公設預約' }} component={ReservationHome} initialParams={{ userID: route.params.id }}/>
+      <Stack.Screen name="ReservationHome" options={{ title: '公設預約' }} component={ReservationHome} initialParams={{ MemberID: route.params.nameID }}/>
       <Stack.Screen name="Reservation" options={{ title: '公設預約' }} component={Reservation} />
       <Stack.Screen name="ReservationInfo" options={{ title: '公設資訊' }} component={ReservationInfo} />
       <Stack.Screen name="ReservationCheck" options={{ title: '公設預約' }} component={ReservationCheck} initialParams={{ userID: route.params.id , FacilityID: route.params.id}} />
@@ -98,7 +98,7 @@ export default function App() {
           inactiveTintColor: 'gray',
         }}
       >
-        <Tab.Screen name="首頁" component={HomeScreen} initialParams={{ id: userID }} />
+        <Tab.Screen name="首頁" component={HomeScreen} initialParams={{ id: userID ,nameID: MID.MemberID}} />
         <Tab.Screen name="會員中心" component={AccountScreen} initialParams={{ id: userID, mid: MID }} />
       </Tab.Navigator>
     )

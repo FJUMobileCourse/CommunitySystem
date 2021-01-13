@@ -38,7 +38,7 @@ export default function SignUp() {
         }
       }
 
-      if (ID == '' || name == '' || phone == '' || email == '' || password == '') {
+      if (ID == '' || displayName == '' || phone == '' || email == '' || password == '') {
         Alert.alert("", "內容不得為空！");
         return;
     }
