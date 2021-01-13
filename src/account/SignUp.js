@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, View, Text, TextInput, Modal, StyleSheet, Image, Pressable, Keyboard } from 'react-native';
+import { Button, View, Text, TextInput, Modal, StyleSheet, Pressable, Keyboard } from 'react-native';
 import styles from './SignUpStyles';
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios'

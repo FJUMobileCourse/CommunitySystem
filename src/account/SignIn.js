@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Alert, Button, TextInput, Text, View, StyleSheet, Pressable, Keyboard } from 'react-native';
+import { Button, TextInput, Text, View, Pressable, Keyboard } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import styles from './SignUpStyles';
 import axios from 'axios';
-import Home from '../Home';
-import { set } from 'react-native-reanimated';
-import Index from '../forum/Forum';
 import { axios_config, url } from '../Config';
 import { Container } from 'native-base';
 
