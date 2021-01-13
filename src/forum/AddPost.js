@@ -36,6 +36,7 @@ export default function AddPost({ navigation, route }) {
         try {
             await axios.post(finalUrl, newPost, axios_config);
             navigation.goBack();
+            console.log(newPost);
         }
         catch (e) {
             console.log("error:" + e);

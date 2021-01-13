@@ -23,15 +23,15 @@ function ReservationScreen() {
     );
   }
   
-  function ReservationRecordScreen() {
+  function ReservationRecordScreen({route}) {
     return (
     <Stack.Navigator>
-        <Stack.Screen name="ReservationRecord" component={ReservationRecord} options={{headerMode: 'none', headerShown : false}} />
+        <Stack.Screen name="ReservationRecord" component={ReservationRecord} options={{headerMode: 'none', headerShown : false}} initialParams={{ LoginID: route.params.UserID }} />
     </Stack.Navigator>
     );
   }
 
-export default function ReservationHome() {
+export default function ReservationHome({route}) {
     return (
         <Tab.Navigator
         screenOptions={({ route }) => ({
@@ -57,7 +57,7 @@ export default function ReservationHome() {
         >
       
         <Tab.Screen name="Reservation" component={ReservationScreen} options={{ tabBarLabel: '預約' }} />
-        <Tab.Screen name="ReservationRecord" component={ReservationRecordScreen} options={{ tabBarLabel: '預約紀錄' }}/>
+        <Tab.Screen name="ReservationRecord" component={ReservationRecordScreen} options={{ tabBarLabel: '預約紀錄' }} initialParams={{ UserID: route.params.MemberID }} />
       </Tab.Navigator>
     );
 }

@@ -6,11 +6,13 @@ import { axios_config, url } from '../Config';
 import styles from '../styles';
 import axios from 'axios';
 
-export default function ReservationRecord({ navigation }) {
+export default function ReservationRecord({ route , navigation }) {
     const [reservationRecord, setReservationRecord] = useState([]);
     //到時候這裡要接登入者的身分，去抓該登入者的預約紀錄來顯示
-    var userID = '';
-    var finalUrl = url + 'ReservationRecord?' + userID +'sort%5B0%5D%5Bfield%5D=ReservationDate&sort%5B0%5D%5Bdirection%5D=desc';
+    
+    const loginID = route.params.LoginID;
+    console.log(route);
+    const finalUrl = url + 'ReservationRecord?' + loginID +'sort%5B0%5D%5Bfield%5D=ReservationDate&sort%5B0%5D%5Bdirection%5D=desc';
 
     React.useEffect(() => {
         const unsubscribe = navigation.addListener('focus', () => {

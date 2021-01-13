@@ -5,12 +5,13 @@ import { Container, Content, Card, CardItem , Left , Right, Body , Thumbnail , F
 import DateTimePicker from '@react-native-community/datetimepicker';
 import styles from '../styles';
 import axios from 'axios';
+import moment from "moment";
 import {axios_config, url} from '../Config';
 
 
 export default function ReservationCheck({ route , navigation }) {
     const finalUrl = url + 'facility?filterByFormula=FacilityID+%3D+' + route.params.FacilityID;
-    const postUrl = url + 'ReservationRecord?maxRecords=30&view=Grid%20view';
+    const postUrl = url + 'ReservationRecord';
     
     const [posts, setPost] = useState([]);
     const [date, setDate] = useState(new Date());
@@ -138,43 +139,40 @@ export default function ReservationCheck({ route , navigation }) {
         fetchData();
     }, []);
 
+    const send_date = moment(date).format("YYYY-MM-DD");
+
     async function AddRecords() {
         const newReservation = {
             fields: {
-                FacilityID : [route.params.FacilityID] ,
-                ReservationDate : date ,
+                Member : [route.params.userID] ,
+                Facility : [route.params.Id] ,
+                ReservationCount : Numselected,
+                ReservationDate : send_date ,
                 ReservationTime : Timeselected ,
             }
         }
-        try {
-            await axios.post(postUrl, newReservation, axios_config);
+        await axios.post(postUrl, newReservation, axios_config)
+        .then(res => {
+            // console.log("reservation :" , newReservation)
             alert("預約成功！");
             navigation.goBack('Home');
-        }
-        catch (e) {
-            console.log("error:" + e);
-        }
+        })    
+        .catch (function(error)
+        {
+            console.log("reservation :" , newReservation)
+            console.log('error', error)
+            console.log(error.response.status);
+        })
     }
-
-//    function checkTime() {
-//        if (num==0){
-//            return "未領取";
-//        }else if (num==1){
-//             return "已領取"
-//        }else{
-//            return "異常，請聯絡管理員"
-//        }
-//    }
 
     return (
         <Container style={styles.container}>
-            <Content style={styles.item}>
-                <FlatList
-                    data={posts}
-                    renderItem={renderItem}
-                    keyExtractor={item => item.fields.FacilityID}
-                />
-            </Content>   
+            <FlatList
+                style={styles.item}
+                data={posts}
+                renderItem={renderItem}
+                keyExtractor={item => item.fields.FacilityID}
+            /> 
         </Container>
     );
 }

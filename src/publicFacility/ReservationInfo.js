@@ -7,8 +7,6 @@ import axios from 'axios';
 import {axios_config, url} from '../Config';
 
 export default function ReservationInfo({ route, navigation }) {
-    // var facilityID = '' ;
-    // const finalUrl = url + 'facility?maxRecords=30&view=Grid%20view';
     const getInfoUrl = url + 'facility?filterByFormula=FacilityID+%3D+' + route.params.FacilityID;
 
     const [info, setInfo] = useState([]);
@@ -31,7 +29,7 @@ export default function ReservationInfo({ route, navigation }) {
                     </View>
                 </Body>
             </CardItem>
-            <CardItem>
+            <CardItem header>
                 <Body>
                     <Text>設施名稱：{item.fields.FacilityName}</Text>
                     <Text></Text>
@@ -56,7 +54,7 @@ export default function ReservationInfo({ route, navigation }) {
                             alignItems: 'center'
                         }}
                         title="我要預約"
-                        onPress={() => GoToReservationCheck(item.fields.FacilityID)}
+                        onPress={() => GoToReservationCheck(item.fields.FacilityID , item.id)}
                     />
                 </View>
             </CardItem>
@@ -67,8 +65,6 @@ export default function ReservationInfo({ route, navigation }) {
         try {
             const resultOfInfo = await axios.get(getInfoUrl, axios_config);
             setInfo(resultOfInfo.data.records);
-            // console.log(resultOfInfo.data);
-            // console.log(getInfoUrl);
         }
         catch (e) {
             console.log('error:' + e)
@@ -79,20 +75,19 @@ export default function ReservationInfo({ route, navigation }) {
         fetchInfo();
     }, []);
 
-    function GoToReservationCheck(id) {
-        navigation.navigate('ReservationCheck', { FacilityID : id });
+    function GoToReservationCheck(id , longId) {
+        navigation.navigate('ReservationCheck', { FacilityID : id , Id: longId});
     }
 
     return (
       
         <Container style={styles.container}>
-            <Content style={styles.item}>
-                <FlatList
-                    data={info}
-                    renderItem={renderItem}
-                    keyExtractor={item => item.fields.FacilityID}
-                />
-            </Content>   
+            <FlatList
+                style={styles.item}
+                data={info}
+                renderItem={renderItem}
+                keyExtractor={item => item.fields.FacilityID}
+            /> 
         </Container>
     );
 }
